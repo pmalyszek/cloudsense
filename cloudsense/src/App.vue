@@ -1,47 +1,37 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <h1 class="nice">{{ message }}</h1>
+    <div id="test">{{ answer }}</div>
 </template>
 
+<script setup>
+    import { ref } from 'vue'
+    const message = ref('Hello Vue!')
+
+</script>
+
+<script>
+    import axios from 'axios'
+
+    export default {
+        name: "App",
+        data() {
+            return {
+                answer: {},
+            };
+        },
+        methods: {
+            async getAnswer() {
+                const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather?lat=50.0619474&lon=19.9368564&appid=3fe22def2b2541db31e4232b76706783');
+                this.answer = data;
+            },
+        },
+        beforeMount() {
+            this.getAnswer();
+        },
+    };
+
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+    .nice { color: red }
 </style>
