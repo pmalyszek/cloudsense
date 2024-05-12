@@ -1,0 +1,67 @@
+body {
+    background-color: #eeeeee;
+}
+
+#root {
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#navigationPanel {
+    width: 180px;
+    height: 600px;
+    background-color: #031c30;
+    float:left;
+}
+
+#logo {
+    width: 180px;
+    height: 81px;
+    margin-top: 39px;
+}
+
+.navigationButton {
+    width:166px;
+    height:30px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    color: white;
+}
+
+.navigationButton:hover {
+    background-color: #e4750e;
+}
+
+.navigationButtonIcon {
+    margin-top: 4px;
+    margin-left: 10px;
+    float:left;
+}
+
+.navigationButtonTitle {
+    margin-top: 4px;
+    margin-left: 10px;
+    float:left;
+}
+
+#content {
+    width: 1020px;
+    height: 600px;
+    float:left;
+}
+
+a:link { 
+    text-decoration: none; 
+  } 
+  a:visited { 
+    text-decoration: none; 
+  } 
+  a:hover { 
+    text-decoration: none; 
+  } 
+  a:active { 
+    text-decoration: none; 
+  }
