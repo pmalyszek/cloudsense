@@ -1,0 +1,72 @@
+#weekSearchBar {
+    width: 500px;
+    height: 120px;
+    margin-left: 10px;
+}
+
+#week {
+    width: 1010px;
+    height: 470px;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 8px #888888;
+}
+
+#location {
+    width: 990px;
+    height: 57px;
+    margin-left: 20px;
+    font-size: 50px;
+}
+
+#dateRange {
+    width: 990px;
+    height: 23px;
+    margin-left: 20px;
+    color: #303345;
+}
+
+#graph {
+    width: 1010px;
+    height: 200px;
+}
+
+.weekday {
+    width: 128px;
+    height: 150px;
+    margin-left: 14px;
+    margin-top: 20px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 8px #888888;
+    float: left;
+}
+
+.weekdayName {
+    width: 128px;
+    height: 20px;
+    font-size: 17px;
+    text-align: center;
+}
+
+.temperature {
+    width: 128px;
+    height: 20px;
+    color: #303345;
+    font-size: 17px;
+    text-align: center;
+}
+
+.weatherIcon {
+    width: 78px;
+    height: 78px;
+    margin-left: 25px;
+}
+
+.weatherName {
+    width: 128px;
+    height: 20px;
+    color: #303345;
+    font-size: 17px;
+    text-align: center;
+}

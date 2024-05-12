@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import PageMain from './components/views/PageMain.vue'
+// import PageMain from './components/views/PageMain.vue'
 import PageNavigation from './components/PageNavigation.vue'
 import { ref } from 'vue'
 
