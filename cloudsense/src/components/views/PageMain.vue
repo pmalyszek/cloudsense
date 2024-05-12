@@ -13,7 +13,7 @@
         <div id="weather">
             <!--TODO: Changing the div content acording to currently selected location.-->
             <div id="location">
-                Kraków, Poland
+                {{ locationName }}
             </div>
             <!--TODO: Changing the div content acording to current date.-->
             <div id="date">
@@ -182,3 +182,71 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import axios from 'axios'
+import { ref } from 'vue'
+const startCoordinates = {
+    name: "Barcelona",
+    country: "ES",
+    lat: '41.3828939',
+    lon: '2.1774322'
+}
+const locationName = ref(startCoordinates.name);
+
+function getWeather() {
+
+    axios.get('https://api.openweathermap.org/data/2.5/weather', {
+        params: {
+            lat: startCoordinates.lat,
+            lon: startCoordinates.lon,
+            units: 'metric',
+            appid: '3fe22def2b2541db31e4232b76706783'
+        }
+    })
+        .then(function (response) {
+ 
+            var coordinates = response.coord;
+            var generalWeather = response.weather;
+            var mainWeather = response.main;
+            var wind = response.wind;
+            var rain = response.rain;
+
+            locationName.value = startCoordinates.name
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .finally(function () {
+            // always executed
+        });
+}
+
+function getLocation(cityName) {
+
+    axios.get('http://api.openweathermap.org/geo/1.0/direct', {
+        params: {
+            q: cityName,
+            appid: '3fe22def2b2541db31e4232b76706783'
+        }
+    })
+        .then(function (response) {
+            let location = response.data[0];
+            startCoordinates.lat = location.lat;
+            startCoordinates.lon = location.lon;
+            startCoordinates.name = location.name;
+            startCoordinates.country = location.country;
+            // getWeather();
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        .finally(function () {
+            // always executed
+        });
+}
+// getLocation("Warszawa")
+// getWeather();
+
+
+</script>

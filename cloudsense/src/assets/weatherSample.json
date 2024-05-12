@@ -1,1 +1,43 @@
-{ "coord": { "lon": 19.9369, "lat": 50.0619 }, "weather": [ { "id": 800, "main": "Clear", "description": "clear sky", "icon": "01d" } ], "base": "stations", "main": { "temp": 290.39, "feels_like": 289.14, "temp_min": 287.36, "temp_max": 290.82, "pressure": 1009, "humidity": 37 }, "visibility": 10000, "wind": { "speed": 4.12, "deg": 50 }, "clouds": { "all": 0 }, "dt": 1715522881, "sys": { "type": 2, "id": 2093303, "country": "PL", "sunrise": 1715482682, "sunset": 1715537717 }, "timezone": 7200, "id": 3085041, "name": "Śródmieście", "cod": 200 }
+{
+    "coord": {
+        "lon": 19.94,
+        "lat": 50.06
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 9.41,
+        "feels_like": 9.41,
+        "temp_min": 8.6,
+        "temp_max": 10.16,
+        "pressure": 1021,
+        "humidity": 60
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.03,
+        "deg": 0
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1715543296,
+    "sys": {
+        "type": 1,
+        "id": 1701,
+        "country": "PL",
+        "sunrise": 1715482682,
+        "sunset": 1715537716
+    },
+    "timezone": 7200,
+    "id": 3085041,
+    "name": "Śródmieście",
+    "cod": 200
+}

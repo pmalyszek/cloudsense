@@ -1,7 +1,6 @@
 <template>
     <div class="wrapper">
-        <page-navigation>
-        </page-navigation>
+        <page-navigation></page-navigation>
         <page-main>
             <router-view></router-view>
         </page-main>
@@ -19,7 +18,7 @@ import { ref } from 'vue'
 
 <script>
 import axios from 'axios'
-import data from '/src/assets/weatherSample.json'
+import apiResponse from '/src/assets/weatherSample.json'
 
 export default {
     name: "App",
@@ -29,21 +28,27 @@ export default {
         };
     },
     methods: {
-        async getAnswer() {
-            // const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather?lat=50.0619474&lon=19.9368564&appid=3fe22def2b2541db31e4232b76706783');
-
+        async getWeather() {
+            const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather?lat=41.3828939&lon=2.1774322&units=metric&appid=3fe22def2b2541db31e4232b76706783');
+            var coordinates = apiResponse.coord;
+            var generalWeather = apiResponse.weather;
+            var mainWeather = apiResponse.main;
+            var wind = apiResponse.wind;
+            var rain = apiResponse.rain;
             this.answer = data;
+
         },
+        async getLocation(cityName) {
+            let url = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&appid=3fe22def2b2541db31e4232b76706783'
+            // console.log(url);
+            let location = await axios.get(url);
+            console.log(location.data[0]);
+            return location.data[0];
+        }
     },
     beforeMount() {
-        this.getAnswer();
+        this.getWeather();
     },
 };
 
 </script>
-
-<style scoped>
-.nice {
-    color: red
-}
-</style>
