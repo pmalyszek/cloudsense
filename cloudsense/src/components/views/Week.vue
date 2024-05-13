@@ -1,9 +1,14 @@
 <template>
     <div id="content">
-        <!--TODO: Figure out how to implement search bar.-->
-        <div id="weekSearchBar">
-            searchBar
-        </div>
+        <div id="searchBar">
+			<!--TODO: Link to app endpoint, where location search is triggered.-->
+			<a href="https://www.google.com/">
+				<div id="searchBarIcon">
+					<img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30"/>
+				</div>
+			</a>
+			<input id="searchBarInput" type="text" placeholder="Search for location">
+		</div>
         <div id="week">
             <!--TODO: Changing the div content acording to currently selected location.-->
             <div id="location">

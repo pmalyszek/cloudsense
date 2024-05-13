@@ -1,10 +1,15 @@
 <template>
     <div id="content">
         <div>
-            <!--TODO: Figure out how to implement search bar.-->
-            <div id="archSearchBar">
-                searchBar
-            </div>
+            <div id="searchBar">
+				<!--TODO: Link to app endpoint, where location search is triggered.-->
+				<a href="https://www.google.com/">
+					<div id="searchBarIcon">
+						<img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30"/>
+					</div>
+				</a>
+				<input id="searchBarInput" type="text" placeholder="Search for location">
+			</div>
             <div id="archiveMessage">
                 Check the past weather
             </div>

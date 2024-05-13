@@ -10,7 +10,7 @@ body {
 
 #navigationPanel {
     width: 180px;
-    height: 650px;
+    height: 600px;
     background-color: #031c30;
     float:left;
 }
@@ -49,7 +49,7 @@ body {
 
 #content {
     width: 1020px;
-    height: 650px;
+    height: 600px;
     float:left;
 }
 
