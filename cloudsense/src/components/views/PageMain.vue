@@ -2,15 +2,14 @@
     <div id="content">
         <div>
             <div id="searchBar">
-				<!--TODO: Link to app endpoint, where location search is triggered.-->
-				<a href="https://www.google.com/">
-					<div id="searchBarIcon">
-						<img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30"/>
-					</div>
-				</a>
-				<input id="searchBarInput" type="text" placeholder="Search for location">
-			</div>
-            <!--TODO: Changing the div content acording to time.-->
+                <!--TODO: Link to app endpoint, where location search is triggered.-->
+                <a href="https://www.google.com/">
+                    <div id="searchBarIcon">
+                        <img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30" />
+                    </div>
+                </a>
+                <input id="searchBarInput" type="text" placeholder="Search for location">
+            </div>
             <div id="helloMessage">
                 {{ helloMessage }}
             </div>
@@ -19,7 +18,6 @@
             <div id="dashboardLocation">
                 {{ locationName }}
             </div>
-            <!--TODO: Changing the div content acording to current date.-->
             <div id="date">
                 {{ date }}
             </div>
@@ -28,162 +26,34 @@
                 <img src="/src/components/images/weather/cloudyIcon.svg" width="188px" height="188px" />
             </div>
             <div style="float: left">
-                <!--TODO: Changing the div content according to current weather in currently selected location.-->
                 <div id="currentTemperature">
                     <p><span>{{ temperature }}</span> &deg;C</p>
                 </div>
-                <!--TODO: Changing the div content according to current weather in currently selected location.-->
                 <div id="weatherName">
                     {{ description }}
                 </div>
             </div>
         </div>
-        <!--TODO: Changing the div content according to quote returned by an API.-->
         <div id="quote">
             <p>{{ quoteContent }}</p>
             <p>~<span>{{ qouteAuthor }}</span></p>
         </div>
         <div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
+            <template v-for="h, index of hours" :key="h.dt">
+                <div class="forecast">
+                
                 <div class="time">
-                    11:00
+                    {{ h.time }}
                 </div>
                 <div>
                     <!--TODO: Changing the 'src' attribute value according to predicted weather-->
                     <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
                 </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
                 <div class="predictedTemperature">
-                    10 &deg;C
+                    <p><span>{{ h.temp }}</span>&deg;C</p> 
                 </div>
             </div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
-                <div class="time">
-                    12:00
-                </div>
-                <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
-                </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
-                <div class="predictedTemperature">
-                    10 &deg;C
-                </div>
-            </div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
-                <div class="time">
-                    13:00
-                </div>
-                <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
-                </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
-                <div class="predictedTemperature">
-                    10 &deg;C
-                </div>
-            </div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
-                <div class="time">
-                    14:00
-                </div>
-                <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
-                </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
-                <div class="predictedTemperature">
-                    10 &deg;C
-                </div>
-            </div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
-                <div class="time">
-                    15:00
-                </div>
-                <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
-                </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
-                <div class="predictedTemperature">
-                    10 &deg;C
-                </div>
-            </div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
-                <div class="time">
-                    16:00
-                </div>
-                <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
-                </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
-                <div class="predictedTemperature">
-                    10 &deg;C
-                </div>
-            </div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
-                <div class="time">
-                    17:00
-                </div>
-                <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
-                </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
-                <div class="predictedTemperature">
-                    10 &deg;C
-                </div>
-            </div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
-                <div class="time">
-                    18:00
-                </div>
-                <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
-                </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
-                <div class="predictedTemperature">
-                    10 &deg;C
-                </div>
-            </div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
-                <div class="time">
-                    19:00
-                </div>
-                <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
-                </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
-                <div class="predictedTemperature">
-                    10 &deg;C
-                </div>
-            </div>
-            <div class="forecast">
-                <!--TODO: Changing the div content according to information displayed in parent div.-->
-                <div class="time">
-                    20:00
-                </div>
-                <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
-                </div>
-                <!--TODO: Changing the div content according to predicted temperature-->
-                <div class="predictedTemperature">
-                    10 &deg;C
-                </div>
-            </div>
+            </template>
         </div>
     </div>
 </template>
@@ -199,11 +69,18 @@ const startCoordinates = {
     lat: '41.3828939',
     lon: '2.1774322'
 }
+
+const hourlyCondition = {
+    time: '00:00:00',
+    temp: 5,
+    description: "sunny"
+}
 const locationName = ref(startCoordinates.name)
-const date = ref(new Date(1715543296*1000).toDateString())
+const date = ref(new Date(1715543296 * 1000).toDateString())
 const temperature = ref("10")
 const description = ref('Cloudy')
 const helloMessage = ref(getHelloMessage())
+const hours = ref ( [hourlyCondition, hourlyCondition])
 
 const quoteContent = ref('')
 const qouteAuthor = ref('')
@@ -212,42 +89,36 @@ function getHelloMessage() {
     let now = new Date()
     let hours = now.getHours()
     let message = "Good morning"
-    if(hours >= 18 ) {
+    if (hours >= 18) {
         message = 'Good evening'
-    } else if(hours >= 12) {
-        message =  'Good afternoon'
+    } else if (hours >= 12) {
+        message = 'Good afternoon'
     }
 
     return message
 }
 function getWeather() {
-//https://api.openweathermap.org/data/3.0/onecall
+    //https://api.openweathermap.org/data/3.0/onecall
 
 
-axios.get('https://api.openweathermap.org/data/2.5/weather', {
+    axios.get('https://api.openweathermap.org/data/3.0/onecall', {
         params: {
             lat: startCoordinates.lat,
             lon: startCoordinates.lon,
             units: 'metric',
-            appid: '3fe22def2b2541db31e4232b76706783'
+            exclude: 'minutely',
+            appid: 'e02eca1e933fe1a76c25135ca7d804c0'
         }
     })
         .then(function (response) {
+
             let weatherData = response.data
+            let currentWeather = weatherData.current
 
-            let coordinates = weatherData.coord
-            let generalWeather = weatherData.weather[0]
-            let mainWeather = weatherData.main
-            let wind = weatherData.wind
-            let rain = weatherData.rain
+            let hourlyWeather = weatherData.hourly
 
-            console.log(generalWeather)
-            
-            let tempDay = new Date(weatherData.dt*1000)
-            date.value = tempDay.toDateString()
-            temperature.value = Math.round(mainWeather.temp)
-            let tempDesc = generalWeather.description
-            description.value = tempDesc.charAt(0).toUpperCase() + tempDesc.slice(1)
+            setCurrentWeather(currentWeather)
+            setHourlyWeather(hourlyWeather.slice(1,11))
 
             locationName.value = startCoordinates.name
         })
@@ -257,6 +128,34 @@ axios.get('https://api.openweathermap.org/data/2.5/weather', {
         .finally(function () {
             // always executed
         });
+}
+
+function setCurrentWeather(currentWeather) {
+    let tempDay = new Date(currentWeather.dt * 1000)
+    date.value = tempDay.toDateString()
+    temperature.value = Math.round(currentWeather.temp)
+    let tempDesc = currentWeather.weather[0].description
+    description.value = tempDesc.charAt(0).toUpperCase() + tempDesc.slice(1)
+}
+
+function setHourlyWeather(hourlyWeather) {
+
+    console.log(hourlyWeather)
+    let newHourlyWeather = []
+    hourlyWeather.forEach(hourW => {
+        let hour = new Date(hourW.dt*1000).toLocaleTimeString()
+        let temp = Math.round(hourW.temp)
+        let description = hourW.weather[0].description
+        description = description.charAt(0).toUpperCase() + description.slice(1)
+        let hourWeather = {time: hour, temp: temp, description: description}
+        newHourlyWeather.push(hourWeather)
+        
+    });
+
+    console.log("hourlyweather")
+    console.log(newHourlyWeather) 
+    hours.value = newHourlyWeather
+
 }
 
 function getLocation(cityName) {
@@ -302,7 +201,7 @@ function getDailyQuote() {
 
 getDailyQuote()
 
-setTimeout(()=>{
+setTimeout(() => {
     getLocation('Warszawa')
 }, 3000)
 // watch(locationName)

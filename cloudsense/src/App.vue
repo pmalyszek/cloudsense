@@ -4,7 +4,7 @@
         <page-main>
             <router-view></router-view>
         </page-main>
-        <div id="test">{{ answer }}</div>
+        <!-- <div id="test">{{ answer }}</div> -->
     </div>
 
 </template>
@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         async getWeather() {
-            const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather?lat=41.3828939&lon=2.1774322&units=metric&appid=3fe22def2b2541db31e4232b76706783');
+            const { data } = await axios.get('https://api.openweathermap.org/data/3.0/onecall?lat=41.3828939&lon=2.1774322&units=metric&appid=e02eca1e933fe1a76c25135ca7d804c0');
             var coordinates = apiResponse.coord;
             var generalWeather = apiResponse.weather;
             var mainWeather = apiResponse.main;
@@ -46,9 +46,9 @@ export default {
             return location.data[0];
         }
     },
-    beforeMount() {
-        this.getWeather();
-    },
+    // beforeMount() {
+    //     this.getWeather();
+    // },
 };
 
 </script>
