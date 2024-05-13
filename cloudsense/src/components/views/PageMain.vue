@@ -91,7 +91,7 @@ function getHelloMessage() {
     let now = new Date()
     let hours = now.getHours()
     let message = "Good morning"
-    if (hours >= 18) {
+    if (hours >= 18 || hours <= 4) {
         message = 'Good evening'
     } else if (hours >= 12) {
         message = 'Good afternoon'
