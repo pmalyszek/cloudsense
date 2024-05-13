@@ -22,8 +22,7 @@
                 {{ date }}
             </div>
             <div id="weatherIcon">
-                <!--TODO: Changing the 'src' attribute value according to current weather in currently selected location.-->
-                <img src="/src/components/images/weather/cloudyIcon.svg" width="188px" height="188px" />
+                <img :src="currentMainImage" width="188px" height="188px" />
             </div>
             <div style="float: left">
                 <div id="currentTemperature">
@@ -46,8 +45,7 @@
                     {{ h.time }}
                 </div>
                 <div>
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="90px" height="90px" />
+                    <img :src="h.icon" width="90px" height="90px" />
                 </div>
                 <div class="predictedTemperature">
                     <p><span>{{ h.temp }}</span>&deg;C</p> 
@@ -61,7 +59,7 @@
 <script setup>
 
 import axios from 'axios'
-import { ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 
 const startCoordinates = {
     name: "Barcelona",
@@ -73,7 +71,8 @@ const startCoordinates = {
 const hourlyCondition = {
     time: '00:00',
     temp: 5,
-    description: "sunny"
+    description: "sunny",
+    icon: 'https://openweathermap.org/img/wn/04n@2x.png'
 }
 const locationName = ref(startCoordinates.name)
 const date = ref(new Date(1715543296 * 1000).toDateString())
@@ -81,6 +80,9 @@ const temperature = ref("10")
 const description = ref('Cloudy')
 const helloMessage = ref(getHelloMessage())
 const hours = ref ( [hourlyCondition, hourlyCondition])
+const currentMainImage = ref("/src/components/images/weather/cloudyIcon.svg")
+const iconAddressStart = 'https://openweathermap.org/img/wn/'
+const iconAddressEnd = '@2x.png'
 
 const quoteContent = ref('')
 const qouteAuthor = ref('')
@@ -136,26 +138,22 @@ function setCurrentWeather(currentWeather) {
     temperature.value = Math.round(currentWeather.temp)
     let tempDesc = currentWeather.weather[0].description
     description.value = tempDesc.charAt(0).toUpperCase() + tempDesc.slice(1)
+    currentMainImage.value = iconAddressStart + currentWeather.weather[0].icon + iconAddressEnd
 }
 
 function setHourlyWeather(hourlyWeather) {
-
-    console.log(hourlyWeather)
     let newHourlyWeather = []
     hourlyWeather.forEach(hourW => {
         let hour = new Date(hourW.dt*1000).toLocaleTimeString().slice(0,5)
         let temp = Math.round(hourW.temp)
         let description = hourW.weather[0].description
         description = description.charAt(0).toUpperCase() + description.slice(1)
-        let hourWeather = {time: hour, temp: temp, description: description}
+        let icon = iconAddressStart + hourW.weather[0].icon + iconAddressEnd
+        let hourWeather = {time: hour, temp: temp, description: description, icon: icon}
         newHourlyWeather.push(hourWeather)
         
     });
-
-    console.log("hourlyweather")
-    console.log(newHourlyWeather) 
     hours.value = newHourlyWeather
-
 }
 
 function getLocation(cityName) {
@@ -172,7 +170,6 @@ function getLocation(cityName) {
             startCoordinates.lon = location.lon
             startCoordinates.name = location.name
             startCoordinates.country = location.country
-            // console.log(location)
             getWeather()
         })
         .catch(function (error) {
@@ -204,6 +201,5 @@ getDailyQuote()
 setTimeout(() => {
     getLocation('Warszawa')
 }, 3000)
-// watch(locationName)
 
 </script>
