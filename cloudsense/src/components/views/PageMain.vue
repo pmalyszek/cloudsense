@@ -10,12 +10,9 @@
 				</a>
 				<input id="searchBarInput" type="text" placeholder="Search for location">
 			</div>
-            <div id="archiveMessage">
-                Check the past weather
-            </div>
             <!--TODO: Changing the div content acording to time.-->
-            <div id="message">
-                Good Morning !!!
+            <div id="helloMessage">
+                {{ helloMessage }}
             </div>
         </div>
         <div id="weather">
@@ -43,7 +40,8 @@
         </div>
         <!--TODO: Changing the div content according to quote returned by an API.-->
         <div id="quote">
-            A change in the weather is sufficient to recreate the world and ourselves. ~ Marcel Proust
+            <p>{{ quoteContent }}</p>
+            <p>~<span>{{ qouteAuthor }}</span></p>
         </div>
         <div>
             <div class="forecast">
@@ -205,10 +203,28 @@ const locationName = ref(startCoordinates.name)
 const date = ref(new Date(1715543296*1000).toDateString())
 const temperature = ref("10")
 const description = ref('Cloudy')
+const helloMessage = ref(getHelloMessage())
 
+const quoteContent = ref('')
+const qouteAuthor = ref('')
+
+function getHelloMessage() {
+    let now = new Date()
+    let hours = now.getHours()
+    let message = "Good morning"
+    if(hours >= 18 ) {
+        message = 'Good evening'
+    } else if(hours >= 12) {
+        message =  'Good afternoon'
+    }
+
+    return message
+}
 function getWeather() {
+//https://api.openweathermap.org/data/3.0/onecall
 
-    axios.get('https://api.openweathermap.org/data/2.5/weather', {
+
+axios.get('https://api.openweathermap.org/data/2.5/weather', {
         params: {
             lat: startCoordinates.lat,
             lon: startCoordinates.lon,
@@ -268,9 +284,27 @@ function getLocation(cityName) {
         });
 }
 
+function getDailyQuote() {
+    axios.get('https://api.quotable.io/quotes/random?limit=1')
+        .then(function (response) {
+            let quote = response.data[0]
+            console.log(quote)
+            quoteContent.value = quote.content
+            qouteAuthor.value = quote.author
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+        .finally(function () {
+            // always executed
+        });
+}
+
+getDailyQuote()
+
 setTimeout(()=>{
     getLocation('Warszawa')
 }, 3000)
-watch(locationName)
+// watch(locationName)
 
 </script>

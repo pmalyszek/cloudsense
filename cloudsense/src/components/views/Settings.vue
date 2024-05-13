@@ -1,6 +1,6 @@
 <template>
     <div id="content">
-        <div id="message">
+        <div id="settingsMessage">
             Customize app for yourself
         </div>
         <div class="setting">
