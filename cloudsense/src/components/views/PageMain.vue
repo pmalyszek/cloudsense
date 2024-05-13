@@ -71,7 +71,7 @@ const startCoordinates = {
 }
 
 const hourlyCondition = {
-    time: '00:00:00',
+    time: '00:00',
     temp: 5,
     description: "sunny"
 }
@@ -143,7 +143,7 @@ function setHourlyWeather(hourlyWeather) {
     console.log(hourlyWeather)
     let newHourlyWeather = []
     hourlyWeather.forEach(hourW => {
-        let hour = new Date(hourW.dt*1000).toLocaleTimeString()
+        let hour = new Date(hourW.dt*1000).toLocaleTimeString().slice(0,5)
         let temp = Math.round(hourW.temp)
         let description = hourW.weather[0].description
         description = description.charAt(0).toUpperCase() + description.slice(1)
