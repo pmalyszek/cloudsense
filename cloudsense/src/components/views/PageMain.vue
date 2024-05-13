@@ -11,13 +11,12 @@
             </div>
         </div>
         <div id="weather">
-            <!--TODO: Changing the div content acording to currently selected location.-->
-            <div id="location">
+            <div id="dashboardLocation">
                 {{ locationName }}
             </div>
             <!--TODO: Changing the div content acording to current date.-->
             <div id="date">
-                2024-05-10
+                {{ date }}
             </div>
             <div id="weatherIcon">
                 <!--TODO: Changing the 'src' attribute value according to current weather in currently selected location.-->
@@ -26,11 +25,11 @@
             <div style="float: left">
                 <!--TODO: Changing the div content according to current weather in currently selected location.-->
                 <div id="currentTemperature">
-                    10 &deg;C
+                    <p><span>{{ temperature }}</span> &deg;C</p>
                 </div>
                 <!--TODO: Changing the div content according to current weather in currently selected location.-->
                 <div id="weatherName">
-                    Cloudy
+                    {{ description }}
                 </div>
             </div>
         </div>
@@ -184,15 +183,20 @@
 </template>
 
 <script setup>
+
 import axios from 'axios'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
 const startCoordinates = {
     name: "Barcelona",
     country: "ES",
     lat: '41.3828939',
     lon: '2.1774322'
 }
-const locationName = ref(startCoordinates.name);
+const locationName = ref(startCoordinates.name)
+const date = ref(new Date(1715543296*1000).toDateString())
+const temperature = ref("10")
+const description = ref('Cloudy')
 
 function getWeather() {
 
@@ -205,17 +209,26 @@ function getWeather() {
         }
     })
         .then(function (response) {
- 
-            var coordinates = response.coord;
-            var generalWeather = response.weather;
-            var mainWeather = response.main;
-            var wind = response.wind;
-            var rain = response.rain;
+            let weatherData = response.data
+
+            let coordinates = weatherData.coord
+            let generalWeather = weatherData.weather[0]
+            let mainWeather = weatherData.main
+            let wind = weatherData.wind
+            let rain = weatherData.rain
+
+            console.log(generalWeather)
+            
+            let tempDay = new Date(weatherData.dt*1000)
+            date.value = tempDay.toDateString()
+            temperature.value = Math.round(mainWeather.temp)
+            let tempDesc = generalWeather.description
+            description.value = tempDesc.charAt(0).toUpperCase() + tempDesc.slice(1)
 
             locationName.value = startCoordinates.name
         })
         .catch(function (error) {
-            console.log(error);
+            console.log(error)
         })
         .finally(function () {
             // always executed
@@ -231,22 +244,25 @@ function getLocation(cityName) {
         }
     })
         .then(function (response) {
-            let location = response.data[0];
-            startCoordinates.lat = location.lat;
-            startCoordinates.lon = location.lon;
-            startCoordinates.name = location.name;
-            startCoordinates.country = location.country;
-            // getWeather();
+            let location = response.data[0]
+            startCoordinates.lat = location.lat
+            startCoordinates.lon = location.lon
+            startCoordinates.name = location.name
+            startCoordinates.country = location.country
+            // console.log(location)
+            getWeather()
         })
         .catch(function (error) {
-            console.log(error);
+            console.log(error)
         })
         .finally(function () {
             // always executed
         });
 }
-// getLocation("Warszawa")
-// getWeather();
 
+setTimeout(()=>{
+    getLocation('Warszawa')
+}, 3000)
+watch(locationName)
 
 </script>
