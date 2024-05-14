@@ -5,100 +5,98 @@
     font-size: 50px;
 }
 
-#calendar {
-    width: 1000px;
-    height: 200px;
+#archContent {
+    width: 990px;
+    height: 400px;
     margin-left: 10px;
     border-radius: 20px;
     box-shadow: 5px 5px 8px #888888;
-}
-
-.calendarNavigationButton {
-    width: 40px;
-    height: 200px;
-    border-radius: 20px;
-    float: left;
-    align-content: center;
-}
-
-.calendarNavigationButton:hover {
-    background-color: #e4750e;
-}
-
-#calendarContent {
-    width: 920px;
-    height: 200px;
-    float: left;
-}
-
-#archWeather {
-    width: 300px;
-    height: 205px;
-    margin-left: 10px;
-    margin-top: 10px;
-    border-radius: 20px;
-    box-shadow: 5px 5px 8px #888888;
-    float:left;
 }
 
 #archLocation {
-    width: 280px;
+    width: 990px;
     height: 40px;
     margin-left: 20px;
     margin-top: 10px;
     font-size: 30px;
 }
 
-#archDate {
-    width: 280px;
+#archDateRange {
+    width: 990px;
     height: 20px;
     margin-left: 20px;
     color: #303345;
 }
 
-#archWeatherIcon {
-    width: 140px;
-    height: 130px;
-    margin-left: 20px;
-    float: left;
-}
-
-#temperature {
-    width: 120px;
-    height: 40px;
-    margin-left: 20px;
-    color: #303345;
-    font-size: 35px;
-}
-
-#archWeatherName {
-    width: 120px;
-    height: 94px;
-    margin-left: 20px;
-    color: #303345;
-}
-
-#description {
-    width: 690px;
-    height: 205px;
+.archGraph {
+    width: 340px;
+    height: 280px;
     margin-left: 10px;
-    margin-top: 10px;
-    border-radius: 20px;
-    box-shadow: 5px 5px 8px #888888;
     float: left;
 }
 
-#descriptionTitle {
-    width: 650px;
-    height: 50px;
-    margin-left: 20px;
-    font-size: 30px;
+#archDetails {
+    width: 270px;
+    height: 335px;
+    float:left;
 }
 
-#descriptionContent {
-    width: 650px;
-    height: 135px;
+.archDetailsTitle {
+    width: 250px;
+    height: 40px;
+    font-size: 25px;
+}
+
+#archSettings {
+    width: 230px;
+    height: 80px;
     margin-left: 20px;
+    margin-top: 10px;
+}
+
+#yearInput {
+    width: 70px;
+    height: 25px;
+    border-radius: 5px;
+    border-color: #707c86;
+    font-size: 15px;
+    float:left;
+}
+
+#calendarWeekInput {
+    width: 102px;
+    height: 25px;
+    margin-left: 5px;
+    border-radius: 5px;
+    border-color: #707c86;
+    font-size: 15px;
+    float:left;
+}
+
+#archSettingsButton {
+    width: 29px;
+    height: 29px;
+    margin-left: 5px;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #707c86;
+    align-content: center;
+    text-align: center;
+    float: left;
+}
+
+#archSettingsButton:hover {
+    background-color: #e4750e;
+}
+
+#archDescription {
+    width: 230px;
+    height: 225px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+#archDetailsContent {
     color: #303345;
-    font-size: 20px;
 }
