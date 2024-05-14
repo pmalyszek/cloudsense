@@ -2,13 +2,12 @@
     <div id="content">
         <div>
             <div id="searchBar">
-                <!--TODO: Link to app endpoint, where location search is triggered.-->
-                <a href="https://www.google.com/">
+                <a @click="getLocation">
                     <div id="searchBarIcon">
                         <img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30" />
                     </div>
                 </a>
-                <input id="searchBarInput" type="text" placeholder="Search for location">
+                <input id="searchBarInput" type="text" placeholder="Search for location" @keydown.enter="getLocation">
             </div>
             <div id="helloMessage">
                 {{ helloMessage }}
@@ -100,8 +99,6 @@ function getHelloMessage() {
     return message
 }
 function getWeather() {
-    //https://api.openweathermap.org/data/3.0/onecall
-
 
     axios.get('https://api.openweathermap.org/data/3.0/onecall', {
         params: {
@@ -156,7 +153,9 @@ function setHourlyWeather(hourlyWeather) {
     hours.value = newHourlyWeather
 }
 
-function getLocation(cityName) {
+function getLocation() {
+
+    let cityName = document.getElementById("searchBarInput").value
 
     axios.get('http://api.openweathermap.org/geo/1.0/direct', {
         params: {
@@ -197,9 +196,5 @@ function getDailyQuote() {
 }
 
 getDailyQuote()
-
-setTimeout(() => {
-    getLocation('Warszawa')
-}, 3000)
 
 </script>
