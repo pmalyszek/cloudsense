@@ -1,7 +1,12 @@
 import { reactive } from 'vue'
 
 export default reactive({
-    weeklyWeather: [],
+    weeklyWeather: {
+        data: []
+    },
+    hourlyWeather: {
+        data: []
+    },
     currentWeather: {
         temperature: 20,
         date: 'Tue Apr 12 2024',

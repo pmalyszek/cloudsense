@@ -12,7 +12,7 @@
         <div id="week">
             <!--TODO: Changing the div content acording to currently selected location.-->
             <div id="location">
-                Kraków, Poland
+                <p><span>{{ locationName }}</span>,<span>{{ countryCode }}</span></p>
             </div>
             <!--TODO: Changing the div content acording to date range of current week.-->
             <div id="dateRange">
@@ -22,7 +22,7 @@
             <div id="graph">
                 graph
             </div>
-            <template v-for="wd of weekdays">
+            <template v-for="wd of weekdays.data">
                 <div class="weekday">
                     <div class="weekdayName">
                         {{ wd.day }}
@@ -48,6 +48,8 @@ import { ref } from 'vue'
 import state from '/src/state.js'
 
 const weekdays = ref(state.weeklyWeather)
+const locationName = ref(state.currentLocation.name)
+const countryCode = ref(state.currentLocation.country)
 
 google.charts.load('current', { 'packages': ['corechart'] });
 google.charts.setOnLoadCallback(drawChart);
@@ -55,7 +57,7 @@ function drawChart() {
 
     let daysTable = []
     let tempTable = []
-    state.weeklyWeather.forEach(daily => {
+    state.weeklyWeather.data.forEach(daily => {
         daysTable.push(daily.day.slice(0, 3))
         tempTable.push(daily.temp)
     })

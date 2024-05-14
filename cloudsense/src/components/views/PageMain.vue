@@ -37,7 +37,7 @@
             <p>~<span>{{ qouteAuthor }}</span></p>
         </div>
         <div>
-            <template v-for="h, index of hours" :key="h.dt">
+            <template v-for="h of hours.data" :key="h.dt">
                 <div class="forecast">
 
                     <div class="time">
@@ -59,31 +59,16 @@
 
 import axios from 'axios'
 import state from '/src/state.js'
-import { reactive, ref, watch } from 'vue'
-
-const startCoordinates = {
-    name: "Barcelona",
-    country: "ES",
-    lat: '41.3828939',
-    lon: '2.1774322'
-}
-
-const hourlyCondition = {
-    time: '00:00',
-    temp: 5,
-    description: "sunny",
-    icon: 'https://openweathermap.org/img/wn/04n@2x.png'
-}
+import { reactive, ref } from 'vue'
 
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 //reactives
 const locationName = ref(state.currentLocation.name)
-
+const hours = reactive(state.hourlyWeather)
 const currentWeather = reactive(state.currentWeather)
 
 const helloMessage = ref(getHelloMessage())
-const hours = ref([hourlyCondition, hourlyCondition])
 
 const iconAddressStart = 'https://openweathermap.org/img/wn/'
 const iconAddressEnd = '@2x.png'
@@ -144,12 +129,11 @@ function setCurrentWeather(currentW) {
     let tempDesc = currentW.weather[0].description
     state.currentWeather.description = tempDesc.charAt(0).toUpperCase() + tempDesc.slice(1)
     state.currentWeather.icon = iconAddressStart + currentW.weather[0].icon + iconAddressEnd
-    console.log(state.currentWeather)
 }
 
-function setHourlyWeather(hourlyWeather) {
+function setHourlyWeather(hourlyW) {
     let newHourlyWeather = []
-    hourlyWeather.forEach(hourW => {
+    hourlyW.forEach(hourW => {
         let hour = new Date(hourW.dt * 1000).toLocaleTimeString().slice(0, 5)
         let temp = Math.round(hourW.temp)
         let description = hourW.weather[0].description
@@ -157,9 +141,10 @@ function setHourlyWeather(hourlyWeather) {
         let icon = iconAddressStart + hourW.weather[0].icon + iconAddressEnd
         let hourWeather = { time: hour, temp: temp, description: description, icon: icon }
         newHourlyWeather.push(hourWeather)
-
     })
-    hours.value = newHourlyWeather
+
+    state.hourlyWeather.data = newHourlyWeather
+    console.log(state.hourlyWeather.data)
 }
 
 function setDailyWeather(dailyWeather) {
@@ -173,7 +158,7 @@ function setDailyWeather(dailyWeather) {
         let dayWeather = { day: day, temp: temp, description: description, icon: icon }
         newDailyWeather.push(dayWeather)
     })
-    state.weeklyWeather = newDailyWeather
+    state.weeklyWeather.data = newDailyWeather
 }
 
 function getLocation() {
@@ -192,6 +177,7 @@ function getLocation() {
             state.currentLocation.lon = location.lon
             state.currentLocation.name = location.name
             state.currentLocation.country = location.country
+            state.methods.showLocation()
             getWeather()
         })
         .catch(function (error) {
