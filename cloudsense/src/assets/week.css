@@ -14,6 +14,10 @@
     font-size: 40px;
 }
 
+.emptyBlock {
+    height: 60px;
+}
+
 #location p {
     margin: 0;
 }

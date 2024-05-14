@@ -1,6 +1,7 @@
 <template>
     <div class="wrapper">
         <page-navigation></page-navigation>
+        <search-bar></search-bar>
         <page-main>
             <router-view></router-view>
         </page-main>
