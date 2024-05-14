@@ -13,59 +13,96 @@
             <div id="archiveMessage">
                 Check the past weather
             </div>
-            <div id="calendar">
-                <!--TODO: Link to app endpoint, where calednar range is changing backward.-->
-                <a href="https://www.google.com/">
-                    <div class="calendarNavigationButton">
-                        <img src="/src/components/images/navigation/leftArrow.svg" width="40px" height="40px" />
-                    </div>
-                </a>
-                <!--TODO: Figure out how to implement a calendar.-->
-                <div id="calendarContent">
-                    calendar
-                </div>
-                <!--TODO: Link to app endpoint, where calednar range is changing forward.-->
-                <a href="https://www.google.com/">
-                <div class="calendarNavigationButton">
-                    <img src="/src/components/images/navigation/rightArrow.svg" width="40px" height="40px" />
-                </div>
-                </a>
-            </div>
-            <div id="archWeather">
-                <!--TODO: Changing the div content acording to currently selected location.-->
-                <div id="archLocation">
-                    Kraków, Poland
-                </div>
-                <!--TODO: Changing the div content acording to currently selected date.-->
-                <div id="archDate">
-                    2024-05-10
-                </div>
-                <div id="archWeatherIcon">
-                    <!--TODO: Changing the 'src' attribute value according to selected date.-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="140px" height="140px" />
-                </div>
-                <div style="float: left">
-                    <!--TODO: Changing the div content acording to currently selected date.-->
-                    <div id="temperature">
-                        10 &deg;C
-                    </div>
-                    <!--TODO: Changing the div content acording to currently selected date.-->
-                    <div id="archWeatherName">
-                        Cloudy
-                    </div>
-                </div>
-            </div>
-            <div id="description">
-                <div id="descriptionTitle">
-                    Weather description
-                </div>
-                <!--TODO: Changing the div content acording to currently selected date.-->
-                <div id="descriptionContent">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam finibus felis at molestie ornare.
-                    Vivamus sit amet fringilla tortor, sit amet lacinia dui. Vivamus sit amet fringilla tortor, sit amet
-                    lacinia dui.
-                </div>
-            </div>
+            <div id="archContent">
+				<!--TODO: Changing the div content according to current location.-->
+				<div id="archLocation">
+					Kraków, Poland
+				</div>
+				<!--TODO: Changing the div content according to selected calendar week.-->
+				<div id="archDateRange">
+					2024-05-10 - 2024-10-17
+				</div>
+				<div id="archGraph1" class="archGraph">
+				</div>
+				<div id="archGraph2" class="archGraph">
+				</div>
+				<div id="archDetails">
+					<div id="archSettings">
+						<div class="archDetailsTitle">
+							Settings
+						</div>
+						<!--TODO: Hook up text boxes to year/calendar week choose mechanism.-->
+						<input id="yearInput" type="text" placeholder="Year">
+						<input id="calendarWeekInput" type="text" placeholder="Calendar Week">
+						<!--TODO: Link to app endpoint, where graphs and description update is triggered.-->
+						<a href="https://www.google.com/">
+							<div id="archSettingsButton">
+								<img src="/src/components/images/navigation/magnifierIcon.svg" width="20" height="20"/>
+							</div>
+						</a>
+					</div>
+					<div id="archDescription">
+						<div class="archDetailsTitle">
+							Description
+						</div>
+						<!--TODO: Update div content accordingly to viewed location and calendar week.-->
+						<div id="archDetailsContent">
+							Temp, hum etc...
+						</div>
+					</div>
+				</div>
+			</div>
         </div>
     </div>
 </template>
+<script type="text/javascript">
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(drawChart1);
+			google.charts.setOnLoadCallback(drawChart2);
+			function drawChart1() {
+				// TODO: Below table shall be updated with the according temperature values.
+				var data = google.visualization.arrayToDataTable([
+				['Time', 'Pressure'],
+				['MON',  10],
+				['TUE',  11],
+				['WED',  12],
+				['THUR',  13],
+				['FRI',  14],
+				['SAT',  15],
+				['SUN',  16]
+				]);
+				var options = {
+					fontSize: 20,
+					backgroundColor: '#eeeeee',
+					hAxis: {textStyle: {color: '#e4750e'}},
+					vAxis: {textStyle: {color: '#e4750e'}},
+					series: [{color: '#e4750e', pointSize: 7, visibleInLegend: false}],
+					tooltip: { trigger: 'selection', textStyle: {color: '#303345;', bold: false}}
+				};
+				var chart = new google.visualization.LineChart(document.getElementById('archGraph1'));
+				chart.draw(data, options);
+			}
+			function drawChart2() {
+				// TODO: Below table shall be updated with the according temperature values.
+				var data = google.visualization.arrayToDataTable([
+				['Time', 'Pressure'],
+				['MON',  10],
+				['TUE',  11],
+				['WED',  12],
+				['THUR',  13],
+				['FRI',  14],
+				['SAT',  15],
+				['SUN',  16]
+				]);
+				var options = {
+					fontSize: 20,
+					backgroundColor: '#eeeeee',
+					hAxis: {textStyle: {color: '#e4750e'}},
+					vAxis: {textStyle: {color: '#e4750e'}},
+					series: [{color: '#e4750e', pointSize: 7, visibleInLegend: false}],
+					tooltip: { trigger: 'selection', textStyle: {color: '#303345;', bold: false}}
+				};
+				var chart = new google.visualization.LineChart(document.getElementById('archGraph2'));
+				chart.draw(data, options);
+			}
+		</script>
