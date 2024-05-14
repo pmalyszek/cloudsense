@@ -177,7 +177,6 @@ function getLocation() {
             state.currentLocation.lon = location.lon
             state.currentLocation.name = location.name
             state.currentLocation.country = location.country
-            state.methods.showLocation()
             getWeather()
         })
         .catch(function (error) {
