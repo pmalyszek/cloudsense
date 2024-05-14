@@ -151,3 +151,30 @@
         </div>
     </div>
 </template>
+<script type="text/javascript">
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(drawChart);
+			function drawChart() {
+				// TODO: Below table shall be updated with the according temperature values.
+				var data = google.visualization.arrayToDataTable([
+				['Time', 'Pressure'],
+				['MON',  10],
+				['TUE',  11],
+				['WED',  12],
+				['THUR',  13],
+				['FRI',  14],
+				['SAT',  15],
+				['SUN',  16]
+				]);
+				var options = {
+					fontSize: 20,
+					backgroundColor: '#eeeeee',
+					hAxis: {textStyle: {color: '#e4750e'}},
+					vAxis: {textStyle: {color: '#e4750e'}},
+					series: [{color: '#e4750e', pointSize: 7, visibleInLegend: false}],
+					tooltip: { trigger: 'selection', textStyle: {color: '#303345;', bold: false}}
+				};
+				var chart = new google.visualization.LineChart(document.getElementById('graph'));
+				chart.draw(data, options);
+			}
+		</script>

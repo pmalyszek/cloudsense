@@ -1,7 +1,7 @@
 <template>
     <div id="content">
         <div>
-            <div id="searchBar">
+            <div id="searchBar" style="float: left;">
                 <a @click="getLocation">
                     <div id="searchBarIcon">
                         <img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30" />
