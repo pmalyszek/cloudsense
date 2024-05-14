@@ -1,14 +1,14 @@
 <template>
     <div id="content">
         <div id="searchBar">
-			<!--TODO: Link to app endpoint, where location search is triggered.-->
-			<a href="https://www.google.com/">
-				<div id="searchBarIcon">
-					<img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30"/>
-				</div>
-			</a>
-			<input id="searchBarInput" type="text" placeholder="Search for location">
-		</div>
+            <!--TODO: Link to app endpoint, where location search is triggered.-->
+            <a href="https://www.google.com/">
+                <div id="searchBarIcon">
+                    <img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30" />
+                </div>
+            </a>
+            <input id="searchBarInput" type="text" placeholder="Search for location">
+        </div>
         <div id="week">
             <!--TODO: Changing the div content acording to currently selected location.-->
             <div id="location">
@@ -22,136 +22,33 @@
             <div id="graph">
                 graph
             </div>
-            <div class="weekday">
-                <!--TODO: Changing the div content acording to name of next week day.-->
-                <div class="weekdayName">
-                    MON
+            <template v-for="wd of weekdays">
+                <div class="weekday">
+                    <div class="weekdayName">
+                        {{ wd.day }}
+                    </div>
+                    <div class="temperature">
+                        <p><span>{{ wd.temp }}</span>&deg;C</p>
+                    </div>
+                    <div class="weatherIcon">
+                        <img :src="wd.icon" width="90px" height="90px" />
+                    </div>
+                    <div class="weatherName">
+                        {{ wd.description }}
+                    </div>
                 </div>
-                <!--TODO: Changing the div content acording to predicted temperature for particular week day.-->
-                <div class="temperature">
-                    10 &deg;C
-                </div>
-                <div class="weatherIcon">
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather for particular week day.-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="78" height="78" />
-                </div>
-                <!--TODO: Changing the div content acording to predicted weather for particular week day.-->
-                <div class="weatherName">
-                    Cloudy
-                </div>
-            </div>
-            <div class="weekday">
-                <!--TODO: Changing the div content acording to name of next week day.-->
-                <div class="weekdayName">
-                    TUE
-                </div>
-                <!--TODO: Changing the div content acording to predicted temperature for particular week day.-->
-                <div class="temperature">
-                    10 &deg;C
-                </div>
-                <div class="weatherIcon">
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather for particular week day.-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="78" height="78" />
-                </div>
-                <!--TODO: Changing the div content acording to predicted weather for particular week day.-->
-                <div class="weatherName">
-                    Cloudy
-                </div>
-            </div>
-            <div class="weekday">
-                <!--TODO: Changing the div content acording to name of next week day.-->
-                <div class="weekdayName">
-                    WED
-                </div>
-                <!--TODO: Changing the div content acording to predicted temperature for particular week day.-->
-                <div class="temperature">
-                    10 &deg;C
-                </div>
-                <div class="weatherIcon">
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather for particular week day.-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="78" height="78" />
-                </div>
-                <!--TODO: Changing the div content acording to predicted weather for particular week day.-->
-                <div class="weatherName">
-                    Cloudy
-                </div>
-            </div>
-            <div class="weekday">
-                <!--TODO: Changing the div content acording to name of next week day.-->
-                <div class="weekdayName">
-                    THU
-                </div>
-                <!--TODO: Changing the div content acording to predicted temperature for particular week day.-->
-                <div class="temperature">
-                    10 &deg;C
-                </div>
-                <div class="weatherIcon">
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather for particular week day.-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="78" height="78" />
-                </div>
-                <!--TODO: Changing the div content acording to predicted weather for particular week day.-->
-                <div class="weatherName">
-                    Cloudy
-                </div>
-            </div>
-            <div class="weekday">
-                <!--TODO: Changing the div content acording to name of next week day.-->
-                <div class="weekdayName">
-                    FRI
-                </div>
-                <!--TODO: Changing the div content acording to predicted temperature for particular week day.-->
-                <div class="temperature">
-                    10 &deg;C
-                </div>
-                <div class="weatherIcon">
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather for particular week day.-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="78" height="78" />
-                </div>
-                <!--TODO: Changing the div content acording to predicted weather for particular week day.-->
-                <div class="weatherName">
-                    Cloudy
-                </div>
-            </div>
-            <div class="weekday">
-                <!--TODO: Changing the div content acording to name of next week day.-->
-                <div class="weekdayName">
-                    SAT
-                </div>
-                <!--TODO: Changing the div content acording to predicted temperature for particular week day.-->
-                <div class="temperature">
-                    10 &deg;C
-                </div>
-                <div class="weatherIcon">
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather for particular week day.-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="78" height="78" />
-                </div>
-                <!--TODO: Changing the div content acording to predicted weather for particular week day.-->
-                <div class="weatherName">
-                    Cloudy
-                </div>
-            </div>
-            <div class="weekday">
-                <!--TODO: Changing the div content acording to name of next week day.-->
-                <div class="weekdayName">
-                    SUN
-                </div>
-                <!--TODO: Changing the div content acording to predicted temperature for particular week day.-->
-                <div class="temperature">
-                    10 &deg;C
-                </div>
-                <div class="weatherIcon">
-                    <!--TODO: Changing the 'src' attribute value according to predicted weather for particular week day.-->
-                    <img src="/src/components/images/weather/cloudyIcon.svg" width="78" height="78" />
-                </div>
-                <!--TODO: Changing the div content acording to predicted weather for particular week day.-->
-                <div class="weatherName">
-                    Cloudy
-                </div>
-            </div>
+            </template>
         </div>
     </div>
 </template>
-<script type="text/javascript">
+
+<script setup>
+
+import { ref } from 'vue'
+import state from '/src/state.js'
+
+const weekdays = ref(state.weeklyWeather)
+
 			google.charts.load('current', {'packages':['corechart']});
 			google.charts.setOnLoadCallback(drawChart);
 			function drawChart() {
@@ -178,3 +75,4 @@
 				chart.draw(data, options);
 			}
 		</script>
+
