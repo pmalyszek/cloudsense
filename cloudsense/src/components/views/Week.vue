@@ -49,30 +49,36 @@ import state from '/src/state.js'
 
 const weekdays = ref(state.weeklyWeather)
 
-			google.charts.load('current', {'packages':['corechart']});
-			google.charts.setOnLoadCallback(drawChart);
-			function drawChart() {
-				// TODO: Below table shall be updated with the according temperature values.
-				var data = google.visualization.arrayToDataTable([
-				['Time', 'Pressure'],
-				['MON',  10],
-				['TUE',  11],
-				['WED',  12],
-				['THUR',  13],
-				['FRI',  14],
-				['SAT',  15],
-				['SUN',  16]
-				]);
-				var options = {
-					fontSize: 20,
-					backgroundColor: '#eeeeee',
-					hAxis: {textStyle: {color: '#e4750e'}},
-					vAxis: {textStyle: {color: '#e4750e'}},
-					series: [{color: '#e4750e', pointSize: 7, visibleInLegend: false}],
-					tooltip: { trigger: 'selection', textStyle: {color: '#303345;', bold: false}}
-				};
-				var chart = new google.visualization.LineChart(document.getElementById('graph'));
-				chart.draw(data, options);
-			}
-		</script>
+google.charts.load('current', { 'packages': ['corechart'] });
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
 
+    let daysTable = []
+    let tempTable = []
+    state.weeklyWeather.forEach(daily => {
+        daysTable.push(daily.day.slice(0, 3))
+        tempTable.push(daily.temp)
+    })
+    
+    var data = google.visualization.arrayToDataTable([
+        ['Day', 'Temperature'],
+        [daysTable[0], tempTable[0]],
+        [daysTable[1], tempTable[1]],
+        [daysTable[2], tempTable[2]],
+        [daysTable[3], tempTable[3]],
+        [daysTable[4], tempTable[4]],
+        [daysTable[5], tempTable[5]],
+        [daysTable[6], tempTable[6]]
+    ]);
+    var options = {
+        fontSize: 18,
+        backgroundColor: '#eeeeee',
+        hAxis: { textStyle: { color: '#e4750e' } },
+        vAxis: { textStyle: { color: '#e4750e' } },
+        series: [{ color: '#e4750e', pointSize: 7, visibleInLegend: false }],
+        tooltip: { trigger: 'selection', textStyle: { color: '#303345;', bold: false } }
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('graph'));
+    chart.draw(data, options);
+}
+</script>
