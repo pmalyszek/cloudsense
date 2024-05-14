@@ -21,7 +21,7 @@
                 {{ currentWeather.date }}
             </div>
             <div id="weatherIcon">
-                <img :src="currentWeather.icon" width="188px" height="188px" />
+                <img :src="currentWeather.icon" width="140px" height="140px" />
             </div>
             <div style="float: left">
                 <div id="currentTemperature">

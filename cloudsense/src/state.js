@@ -11,7 +11,7 @@ export default reactive({
         temperature: 20,
         date: 'Tue Apr 12 2024',
         description: 'Mostly cloudy',
-        icon: '/src/components/images/weather/cloudyIcon.svg'
+        icon: '/src/components/icons/slonce.svg'
     },
     currentLocation: {
         name: "Barc",
