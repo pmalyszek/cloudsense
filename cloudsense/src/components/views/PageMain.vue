@@ -18,17 +18,17 @@
                 {{ locationName }}
             </div>
             <div id="date">
-                {{ date }}
+                {{ currentWeather.date }}
             </div>
             <div id="weatherIcon">
-                <img :src="currentMainImage" width="188px" height="188px" />
+                <img :src="currentWeather.icon" width="188px" height="188px" />
             </div>
             <div style="float: left">
                 <div id="currentTemperature">
-                    <p><span>{{ temperature }}</span> &deg;C</p>
+                    <p><span>{{ currentWeather.temperature }}</span> &deg;C</p>
                 </div>
                 <div id="weatherName">
-                    {{ description }}
+                    {{ currentWeather.description }}
                 </div>
             </div>
         </div>
@@ -75,23 +75,16 @@ const hourlyCondition = {
     icon: 'https://openweathermap.org/img/wn/04n@2x.png'
 }
 
-const dailyCondition = {
-    time: 'Mon',
-    temp: 5,
-    description: "sunny",
-    icon: 'https://openweathermap.org/img/wn/04n@2x.png'
-}
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 //reactives
-const locationName = ref(startCoordinates.name)
-const date = ref(new Date(1715543296 * 1000).toDateString())
-const temperature = ref("10")
-const description = ref('Cloudy')
+const locationName = ref(state.currentLocation.name)
+
+const currentWeather = reactive(state.currentWeather)
+
 const helloMessage = ref(getHelloMessage())
 const hours = ref([hourlyCondition, hourlyCondition])
 
-const currentMainImage = ref("/src/components/images/weather/cloudyIcon.svg")
 const iconAddressStart = 'https://openweathermap.org/img/wn/'
 const iconAddressEnd = '@2x.png'
 
@@ -110,12 +103,13 @@ function getHelloMessage() {
 
     return message
 }
+
 function getWeather() {
 
     axios.get('https://api.openweathermap.org/data/3.0/onecall', {
         params: {
-            lat: startCoordinates.lat,
-            lon: startCoordinates.lon,
+            lat: state.currentLocation.lat,
+            lon: state.currentLocation.lon,
             units: 'metric',
             exclude: 'minutely',
             appid: 'e02eca1e933fe1a76c25135ca7d804c0'
@@ -133,23 +127,24 @@ function getWeather() {
             setHourlyWeather(hourlyWeather.slice(1, 11))
             setDailyWeather(dailyWeather.slice(0,7))
 
-            locationName.value = startCoordinates.name
+            locationName.value = state.currentLocation.name
         })
         .catch(function (error) {
             console.log(error)
         })
         .finally(function () {
             // always executed
-        });
+        })
 }
 
-function setCurrentWeather(currentWeather) {
-    let tempDay = new Date(currentWeather.dt * 1000)
-    date.value = tempDay.toDateString()
-    temperature.value = Math.round(currentWeather.temp)
-    let tempDesc = currentWeather.weather[0].description
-    description.value = tempDesc.charAt(0).toUpperCase() + tempDesc.slice(1)
-    currentMainImage.value = iconAddressStart + currentWeather.weather[0].icon + iconAddressEnd
+function setCurrentWeather(currentW) {
+    let tempDay = new Date(currentW.dt * 1000)
+    state.currentWeather.date = tempDay.toDateString()
+    state.currentWeather.temperature = Math.round(currentW.temp)
+    let tempDesc = currentW.weather[0].description
+    state.currentWeather.description = tempDesc.charAt(0).toUpperCase() + tempDesc.slice(1)
+    state.currentWeather.icon = iconAddressStart + currentW.weather[0].icon + iconAddressEnd
+    console.log(state.currentWeather)
 }
 
 function setHourlyWeather(hourlyWeather) {
@@ -163,7 +158,7 @@ function setHourlyWeather(hourlyWeather) {
         let hourWeather = { time: hour, temp: temp, description: description, icon: icon }
         newHourlyWeather.push(hourWeather)
 
-    });
+    })
     hours.value = newHourlyWeather
 }
 
@@ -193,10 +188,10 @@ function getLocation() {
     })
         .then(function (response) {
             let location = response.data[0]
-            startCoordinates.lat = location.lat
-            startCoordinates.lon = location.lon
-            startCoordinates.name = location.name
-            startCoordinates.country = location.country
+            state.currentLocation.lat = location.lat
+            state.currentLocation.lon = location.lon
+            state.currentLocation.name = location.name
+            state.currentLocation.country = location.country
             getWeather()
         })
         .catch(function (error) {
@@ -204,7 +199,7 @@ function getLocation() {
         })
         .finally(function () {
             // always executed
-        });
+        })
 }
 
 function getDailyQuote() {
@@ -219,7 +214,7 @@ function getDailyQuote() {
         })
         .finally(function () {
             // always executed
-        });
+        })
 }
 
 getDailyQuote()
