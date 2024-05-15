@@ -19,6 +19,10 @@ export default reactive({
         lat: '41.3828939',
         lon: '2.1774322'
     },
+    archiveData: {
+        temperatures: [],
+        winds: []
+    },
     quoteContent: "",
     quoteAuthor: "",
     toggleView: false,

@@ -1,13 +1,14 @@
 #searchBar {
     width: 500px;
-    height: 60px;
+    height: 40px;
+    margin-top: 10px;
     margin-left: 10px;
     align-content: center;
 }
 
 #searchBarIcon {
-    width: 41px;
-    height: 41px;
+    width: 30px;
+    height: 30px;
     margin-right: 5px;
     border-style: solid;
     border-radius: 5px;
@@ -24,7 +25,7 @@
 
 #searchBarInput {
     width: 436px;
-    height: 39px;
+    height: 30px;
     border-style: solid;
     border-radius: 5px;
     border-width: 1px;

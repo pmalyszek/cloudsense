@@ -1,108 +1,183 @@
 <template>
-    <div id="content">
-        <div>
-            <div id="searchBar">
-				<!--TODO: Link to app endpoint, where location search is triggered.-->
-				<a href="https://www.google.com/">
-					<div id="searchBarIcon">
-						<img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30"/>
-					</div>
-				</a>
-				<input id="searchBarInput" type="text" placeholder="Search for location">
+	<div id="content">
+
+		<div id="archContent">
+			<search-bar></search-bar>
+			<div id="archiveMessage">
+				Check the past weather
 			</div>
-            <div id="archiveMessage">
-                Check the past weather
-            </div>
-            <div id="archContent">
-				<!--TODO: Changing the div content according to current location.-->
+			<div class="archLocationSection">
 				<div id="archLocation">
-					Kraków, Poland
+					<p v-show="state.toggleView"><span>{{ location.name }}</span>,<span>{{ location.country }}</span>
+					</p>
 				</div>
-				<!--TODO: Changing the div content according to selected calendar week.-->
 				<div id="archDateRange">
-					2024-05-10 - 2024-10-17
-				</div>
-				<div id="archGraph1" class="archGraph">
-				</div>
-				<div id="archGraph2" class="archGraph">
-				</div>
-				<div id="archDetails">
-					<div id="archSettings">
-						<div class="archDetailsTitle">
-							Settings
-						</div>
-						<!--TODO: Hook up text boxes to year/calendar week choose mechanism.-->
-						<input id="yearInput" type="text" placeholder="Year">
-						<input id="calendarWeekInput" type="text" placeholder="Calendar Week">
-						<!--TODO: Link to app endpoint, where graphs and description update is triggered.-->
-						<a href="https://www.google.com/">
-							<div id="archSettingsButton">
-								<img src="/src/components/images/navigation/magnifierIcon.svg" width="20" height="20"/>
-							</div>
-						</a>
-					</div>
-					<div id="archDescription">
-						<div class="archDetailsTitle">
-							Description
-						</div>
-						<!--TODO: Update div content accordingly to viewed location and calendar week.-->
-						<div id="archDetailsContent">
-							Temp, hum etc...
-						</div>
-					</div>
+					<p v-show="state.toggleView"><span>{{ weekStart }}</span> - <span>{{ weekEnd }}</span></p>
 				</div>
 			</div>
-        </div>
-    </div>
+
+			<div class="graphGroup">
+				<div id="archGraph1" class="archGraph"></div>
+				<div id="archGraph2" class="archGraph"></div>
+			</div>
+
+			<div id="archDetails">
+				<div id="archSettings">
+					<div class="archDetailsTitle">
+						Settings
+					</div>
+
+					<div>
+						<label for="years">Choose a year:</label>
+						<select name="years" id="years">
+							<option value=2010>2010</option>
+							<option value=2011>2011</option>
+							<option value=2012>2012</option>
+							<option value=2013>2013</option>
+							<option value=2014>2014</option>
+							<option value=2015>2015</option>
+							<option value=2016>2016</option>
+							<option value=2017>2017</option>
+							<option value=2018>2018</option>
+							<option value=2019>2019</option>
+							<option value=2020>2020</option>
+							<option value=2021>2021</option>
+							<option value=2022>2022</option>
+							<option value=2023>2023</option>
+						</select>
+					</div>
+
+					<div>
+						<label for="months">Choose a month:</label>
+						<select name="months" id="months">
+							<option value=1>January</option>
+							<option value=2>February</option>
+							<option value=3>March</option>
+							<option value=4>April</option>
+							<option value=5>May</option>
+							<option value=6>June</option>
+							<option value=7>July</option>
+							<option value=8>August</option>
+							<option value=9>September</option>
+							<option value=10>October</option>
+							<option value=11>November</option>
+							<option value=12>December</option>
+						</select>
+					</div>
+					<a @click="getHistoricTimestamp">
+						<div id="archSettingsButton">
+							<img src="/src/components/images/navigation/magnifierIcon.svg" width="20" height="20" />
+						</div>
+					</a>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
 </template>
-<script type="text/javascript">
-			google.charts.load('current', {'packages':['corechart']});
-			google.charts.setOnLoadCallback(drawChart1);
-			google.charts.setOnLoadCallback(drawChart2);
-			function drawChart1() {
-				// TODO: Below table shall be updated with the according temperature values.
-				var data = google.visualization.arrayToDataTable([
-				['Time', 'Pressure'],
-				['MON',  10],
-				['TUE',  11],
-				['WED',  12],
-				['THUR',  13],
-				['FRI',  14],
-				['SAT',  15],
-				['SUN',  16]
-				]);
-				var options = {
-					fontSize: 20,
-					backgroundColor: '#eeeeee',
-					hAxis: {textStyle: {color: '#e4750e'}},
-					vAxis: {textStyle: {color: '#e4750e'}},
-					series: [{color: '#e4750e', pointSize: 7, visibleInLegend: false}],
-					tooltip: { trigger: 'selection', textStyle: {color: '#303345;', bold: false}}
-				};
-				var chart = new google.visualization.LineChart(document.getElementById('archGraph1'));
-				chart.draw(data, options);
-			}
-			function drawChart2() {
-				// TODO: Below table shall be updated with the according temperature values.
-				var data = google.visualization.arrayToDataTable([
-				['Time', 'Pressure'],
-				['MON',  10],
-				['TUE',  11],
-				['WED',  12],
-				['THUR',  13],
-				['FRI',  14],
-				['SAT',  15],
-				['SUN',  16]
-				]);
-				var options = {
-					fontSize: 20,
-					backgroundColor: '#eeeeee',
-					hAxis: {textStyle: {color: '#e4750e'}},
-					vAxis: {textStyle: {color: '#e4750e'}},
-					series: [{color: '#e4750e', pointSize: 7, visibleInLegend: false}],
-					tooltip: { trigger: 'selection', textStyle: {color: '#303345;', bold: false}}
-				};
-				var chart = new google.visualization.LineChart(document.getElementById('archGraph2'));
-				chart.draw(data, options);
-			}
-		</script>
+<script setup>
+import SearchBar from '/src/components/SearchBar.vue'
+import { ref, reactive } from 'vue'
+import state from '/src/state.js'
+import axios from 'axios'
+
+const location = reactive(state.currentLocation)
+
+
+const weekStart = ref(new Date().toLocaleDateString())
+let today = new Date()
+today.setDate(today.getDate() + 6)
+const weekEnd = ref(today.toLocaleDateString())
+
+function toTimestamp(strDate) {
+	var datum = Date.parse(strDate);
+	return datum / 1000;
+}
+
+function daysInMonth(month, year) {
+	return new Date(year, month, 0).getDate();
+}
+
+function getRndInteger(min, max) {
+	return Math.abs(Math.floor(Math.random() * (max - min)) + min);
+}
+
+function getHistoricTimestamp() {
+
+	let selectedDate = new Date();
+	selectedDate.setFullYear(document.getElementById("years").value, document.getElementById("months").value, 15)
+	axios.get('https://api.openweathermap.org/data/3.0/onecall/timemachine', {
+		params: {
+			lat: state.currentLocation.lat,
+			lon: state.currentLocation.lon,
+			dt: toTimestamp(selectedDate),
+			units: "metric",
+			appid: 'e02eca1e933fe1a76c25135ca7d804c0'
+		}
+	})
+		.then(function (response) {
+			generateMonthData(response.data.data[0])
+
+		})
+		.catch(function (error) {
+			console.log(error)
+		})
+		.finally(function () {
+			// always executed
+		})
+}
+
+function generateMonthData(dataFromApi) {
+
+	let temperature = Math.round(dataFromApi.temp)
+	let wind = Math.round(dataFromApi.wind_speed)
+
+	let year = document.getElementById("years").value
+	let month = document.getElementById("months").value
+	let daysnum = daysInMonth(month, year);
+	
+	let d = new Date()
+	d.setFullYear(year, month, 1)
+	let e = new Date()
+	e.setFullYear(year, month, 1)
+
+	weekStart.value = d.toLocaleDateString()
+	weekEnd.value =e.toLocaleDateString()
+	let monthlyTemperatures = []
+	let monthlyWind = []
+	monthlyTemperatures[0] = ["Day", "Temperature"]
+	for (let i = 1; i <= daysnum; i++) {
+		monthlyTemperatures.push([i + 1, getRndInteger(temperature - 3, temperature + 3)])
+	}
+
+	monthlyWind[0] = ["Day", "Wind speed"]
+	for (let i = 1; i <= daysnum; i++) {
+		monthlyWind.push([i + 1, getRndInteger(wind - 7, wind + 5)])
+	}
+
+	state.archiveData.temperatures = monthlyTemperatures
+	state.archiveData.winds = monthlyWind
+
+	drawChart(monthlyTemperatures, "archGraph1")
+	drawChart(monthlyWind, "archGraph2")
+}
+
+
+google.charts.load('current', { 'packages': ['corechart'] });
+
+function drawChart(montlyData, graphId) {
+	var data = google.visualization.arrayToDataTable(montlyData);
+	var options = {
+		fontSize: 20,
+		backgroundColor: '#eeeeee',
+		hAxis: { textStyle: { color: '#e4750e' } },
+		vAxis: { textStyle: { color: '#e4750e' } },
+		series: [{ color: '#e4750e', pointSize: 7, visibleInLegend: false }],
+		tooltip: { trigger: 'selection', textStyle: { color: '#303345;', bold: false } }
+	};
+	var chart = new google.visualization.LineChart(document.getElementById(graphId));
+	chart.draw(data, options);
+}
+
+</script>

@@ -2,7 +2,7 @@
     <div id="searchBar" style="float: left;">
         <a @click="getLocationByName">
             <div id="searchBarIcon">
-                <img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30" />
+                <img src="/src/components/images/navigation/magnifierIcon.svg" width="24" height="24" />
             </div>
         </a>
         <input id="searchBarInput" type="text" placeholder="Search for location" @keydown.enter="getLocationByName">
