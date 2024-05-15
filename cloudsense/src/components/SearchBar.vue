@@ -1,19 +1,20 @@
 <template>
     <div id="searchBar" style="float: left;">
-        <a @click="getLocation">
+        <a @click="getLocationByName">
             <div id="searchBarIcon">
                 <img src="/src/components/images/navigation/magnifierIcon.svg" width="30" height="30" />
             </div>
         </a>
-        <input id="searchBarInput" type="text" placeholder="Search for location" @keydown.enter="getLocation">
+        <input id="searchBarInput" type="text" placeholder="Search for location" @keydown.enter="getLocationByName">
     </div>
 </template>
 
 <script setup>
 import axios from 'axios'
 import state from '/src/state.js'
-import { useRoute } from 'vue-router';
-import { drawChart } from '/src/useMethods.js';
+import { useRoute } from 'vue-router'
+import { drawChart } from '/src/useMethods.js'
+import { onBeforeMount } from 'vue'
 
 const route = useRoute()
 
@@ -44,10 +45,10 @@ function getWeather() {
             setHourlyWeather(hourlyWeather.slice(1, 11))
             setDailyWeather(dailyWeather.slice(0, 7))
 
-            if(route.path == "/week"){
+            if (route.path == "/week") {
                 drawChart()
             }
-            
+            state.toggleView = true
 
         })
         .catch(function (error) {
@@ -96,11 +97,11 @@ function setDailyWeather(dailyWeather) {
     state.weeklyWeather.data = newDailyWeather
 }
 
-function getLocation() {
+function getLocationByName() {
 
     let cityName = document.getElementById("searchBarInput").value
-    if(cityName == ""){
-        cityName = "Lublin"
+    if (cityName == "") {
+        cityName = "London"
     }
 
     axios.get('http://api.openweathermap.org/geo/1.0/direct', {
@@ -120,14 +121,45 @@ function getLocation() {
         .catch(function (error) {
             console.log(error)
         })
-        .finally(function () {
-            // always executed
-        })
 }
 
-// onMounted(() => {
-//     getLocation();
-// })
+function getLocationByCoordinates(position) {
+
+    axios.get('http://api.openweathermap.org/geo/1.0/reverse', {
+        params: {
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+            appid: '3fe22def2b2541db31e4232b76706783'
+        }
+    })
+        .then(function (response) {
+            let location = response.data[0]
+            state.currentLocation.lat = location.lat
+            state.currentLocation.lon = location.lon
+            state.currentLocation.name = location.name
+            state.currentLocation.country = location.country
+            getWeather()
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+    
+}
+
+onBeforeMount(() => {
+    getBrowserLocation()
+
+})
 
 
+function getBrowserLocation() {
+    if (state.currentLocation.name == "") {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(getLocationByCoordinates);
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    }
+
+}
 </script>

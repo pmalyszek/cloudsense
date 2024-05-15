@@ -6,7 +6,7 @@
                 {{ helloMessage }}
             </div>
         </div>
-        <div id="weather">
+        <div id="weather" v-show="state.toggleView">
             <div id="dashboardLocation">
                 {{ location.name }}
             </div>
@@ -25,9 +25,9 @@
                 </div>
             </div>
         </div>
-        <div id="quote">
-            <p>{{ quoteContent }}</p>
-            <p>~<span>{{ qouteAuthor }}</span></p>
+        <div id="quote" v-show="state.toggleView">
+            <p>{{ state.quoteContent }}</p>
+            <p>~<span>{{ state.quoteAuthor }}</span></p>
         </div>
         <div>
             <template v-for="h of hours.data" :key="h.dt">
@@ -52,7 +52,7 @@
 import SearchBar from '/src/components/SearchBar.vue'
 import axios from 'axios'
 import state from '/src/state.js'
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onBeforeMount } from 'vue'
 
 //reactives
 const location = reactive(state.currentLocation)
@@ -61,8 +61,6 @@ const currentWeather = reactive(state.currentWeather)
 
 const helloMessage = ref(getHelloMessage())
 
-const quoteContent = ref('')
-const qouteAuthor = ref('')
 
 function getHelloMessage() {
     let now = new Date()
@@ -77,23 +75,22 @@ function getHelloMessage() {
     return message
 }
 
+onBeforeMount(() => {
+    if(state.updateQuote == true){
+        getDailyQuote()
+    }
+})
+
 function getDailyQuote() {
     axios.get('https://api.quotable.io/quotes/random?limit=1')
         .then(function (response) {
             let quote = response.data[0]
-            quoteContent.value = quote.content
-            qouteAuthor.value = quote.author
+            state.quoteContent = quote.content
+            state.quoteAuthor = quote.author
+            state.updateQuote = false
         })
         .catch(function (error) {
             console.log(error)
         })
-        .finally(function () {
-            // always executed
-        })
 }
-
-onMounted(() => {
-    getDailyQuote()
-})
-
 </script>

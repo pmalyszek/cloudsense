@@ -14,9 +14,13 @@ export default reactive({
         icon: '/src/components/icons/slonce.svg'
     },
     currentLocation: {
-        name: "Barc",
+        name: "",
         country: "ES",
         lat: '41.3828939',
         lon: '2.1774322'
-    }
+    },
+    quoteContent: "",
+    quoteAuthor: "",
+    toggleView: false,
+    updateQuote: true
 })

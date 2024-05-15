@@ -4,6 +4,10 @@ export function drawChart() {
 
     let daysTable = []
     let tempTable = []
+    
+    if(state.weeklyWeather.data.length == 0) {
+        return;
+    }
     state.weeklyWeather.data.forEach(daily => {
         daysTable.push(daily.day.slice(0, 3))
         tempTable.push(daily.temp)

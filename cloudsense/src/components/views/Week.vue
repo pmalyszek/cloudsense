@@ -6,13 +6,12 @@
         </div>
         <div id="week">
             <div id="location" >
-                <p><span>{{ location.name }}</span>,<span>{{ location.country }}</span></p>
+                <p v-show="state.toggleView"><span>{{ location.name }}</span>,<span>{{ location.country }}</span></p>
             </div>
             <div id="dateRange">
-                <p><span>{{ weekStart }}</span> - <span>{{ weekEnd }}</span></p>
+                <p v-show="state.toggleView"><span>{{ weekStart }}</span> - <span>{{ weekEnd }}</span></p>
             </div>
             <div id="graph">
-                graph
             </div>
             <template v-for="wd of weekdays.data">
                 <div class="weekday">
