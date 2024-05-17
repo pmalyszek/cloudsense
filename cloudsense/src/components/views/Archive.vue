@@ -157,22 +157,37 @@ function generateMonthData(dataFromApi) {
 	state.archiveData.temperatures = monthlyTemperatures
 	state.archiveData.winds = monthlyWind
 
-	drawChart(monthlyTemperatures, "archGraph1", "Temperature")
-	drawChart(monthlyWind, "archGraph2", "Wind speed")
+	drawTempChart(monthlyTemperatures, "archGraph1", "Temperature")
+	drawWindChart(monthlyWind, "archGraph2", "Wind speed")
 }
 
 onMounted(() => {
 	if(state.archiveData.temperatures.length == 0) {
 		getHistoricTimestamp()
 	} else {
-		drawChart(state.archiveData.temperatures, "archGraph1", "Temperature")
-		drawChart(state.archiveData.winds, "archGraph2", "Wind speed")
+		drawTempChart(state.archiveData.temperatures, "archGraph1", "Temperature")
+		drawWindChart(state.archiveData.winds, "archGraph2", "Wind speed")
 	}
 
 })
 google.charts.load('current', { 'packages': ['corechart'] });
 
-function drawChart(montlyData, graphId, title) {
+function drawTempChart(montlyData, graphId, title) {
+	var data = google.visualization.arrayToDataTable(montlyData);
+	var options = {
+		title: title,
+		fontSize: 20,
+		backgroundColor: '#eeeeee',
+		hAxis: { textStyle: { color: '#e4750e' } },
+		vAxis: { textStyle: { color: '#e4750e' } },
+		series: [{ color: '#e4750e', pointSize: 5, visibleInLegend: false }],
+		tooltip: { trigger: 'selection', textStyle: { color: '#303345;', bold: false } }
+	};
+	var chart = new google.visualization.LineChart(document.getElementById(graphId));
+	chart.draw(data, options);
+}
+
+function drawWindChart(montlyData, graphId, title) {
 	var data = google.visualization.arrayToDataTable(montlyData);
 	var options = {
 		title: title,
