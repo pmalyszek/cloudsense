@@ -67,6 +67,7 @@
 
 .weatherName {
     width: 128px;
+    margin-top: 10px;
     height: 20px;
     color: #303345;
     font-size: 17px;

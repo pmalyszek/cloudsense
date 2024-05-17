@@ -37,7 +37,7 @@
                         {{ h.time }}
                     </div>
                     <div>
-                        <img :src="h.icon" width="90px" height="90px" />
+                        <img :src="h.icon" width="80px" height="90px" style="margin-left: 5px;"/>
                     </div>
                     <div class="predictedTemperature">
                         <p><span>{{ h.temp }}</span>&deg;C</p>
