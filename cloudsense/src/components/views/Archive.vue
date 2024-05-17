@@ -81,12 +81,9 @@ import SearchBar from '/src/components/SearchBar.vue'
 import { ref, reactive, onMounted } from 'vue'
 import state from '/src/state.js'
 import axios from 'axios'
-// import { getHistoricTimestamp } from '/src/useMethods.js'
 
 const location = reactive(state.currentLocation)
 const archive = reactive(state.archiveData)
-const weekStart = ref(state.archiveData.startDate)
-const weekEnd = ref(state.archiveData.endDate)
 const selectedYear = ref(new Date(state.archiveData.startDate).getFullYear())
 const selectedMonth = ref(new Date(state.archiveData.startDate).getMonth())
 
