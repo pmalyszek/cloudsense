@@ -50,18 +50,18 @@
 					<div>
 						<label for="months">Choose a month:</label>
 						<select name="months" id="months">
-							<option value=1>January</option>
-							<option value=2>February</option>
-							<option value=3>March</option>
-							<option value=4>April</option>
-							<option value=5>May</option>
-							<option value=6>June</option>
-							<option value=7>July</option>
-							<option value=8>August</option>
-							<option value=9>September</option>
-							<option value=10>October</option>
-							<option value=11>November</option>
-							<option value=12>December</option>
+							<option value=0>January</option>
+							<option value=1>February</option>
+							<option value=2>March</option>
+							<option value=3>April</option>
+							<option value=4>May</option>
+							<option value=5>June</option>
+							<option value=6>July</option>
+							<option value=7>August</option>
+							<option value=8>September</option>
+							<option value=9>October</option>
+							<option value=10>November</option>
+							<option value=11>December</option>
 						</select>
 					</div>
 					<a @click="getHistoricTimestamp">
@@ -78,29 +78,25 @@
 </template>
 <script setup>
 import SearchBar from '/src/components/SearchBar.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import state from '/src/state.js'
 import axios from 'axios'
 
 const location = reactive(state.currentLocation)
-
-
-const weekStart = ref(new Date().toLocaleDateString())
-let today = new Date()
-today.setDate(today.getDate() + 6)
-const weekEnd = ref(today.toLocaleDateString())
+const weekStart = ref("")
+const weekEnd = ref("")
 
 function toTimestamp(strDate) {
-	var datum = Date.parse(strDate);
-	return datum / 1000;
+	var datum = Date.parse(strDate)
+	return datum / 1000
 }
 
 function daysInMonth(month, year) {
-	return new Date(year, month, 0).getDate();
+	return new Date(year, Number(month)+1, 0).getDate()
 }
 
 function getRndInteger(min, max) {
-	return Math.abs(Math.floor(Math.random() * (max - min)) + min);
+	return Math.abs(Math.floor(Math.random() * (max - min)) + min)
 }
 
 function getHistoricTimestamp() {
@@ -148,12 +144,12 @@ function generateMonthData(dataFromApi) {
 	let monthlyWind = []
 	monthlyTemperatures[0] = ["Day", "Temperature"]
 	for (let i = 1; i <= daysnum; i++) {
-		monthlyTemperatures.push([i + 1, getRndInteger(temperature - 3, temperature + 3)])
+		monthlyTemperatures.push([i, getRndInteger(temperature - 3, temperature + 3)])
 	}
 
 	monthlyWind[0] = ["Day", "Wind speed"]
 	for (let i = 1; i <= daysnum; i++) {
-		monthlyWind.push([i + 1, getRndInteger(wind - 7, wind + 5)])
+		monthlyWind.push([i, getRndInteger(wind - 7, wind + 5)])
 	}
 
 	state.archiveData.temperatures = monthlyTemperatures
@@ -163,7 +159,9 @@ function generateMonthData(dataFromApi) {
 	drawChart(monthlyWind, "archGraph2")
 }
 
-
+onMounted(() => {
+	getHistoricTimestamp()
+})
 google.charts.load('current', { 'packages': ['corechart'] });
 
 function drawChart(montlyData, graphId) {
