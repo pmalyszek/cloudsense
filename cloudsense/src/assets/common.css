@@ -3,14 +3,14 @@ body {
 }
 
 #root {
-    width: 1200px;
+    width: 1250px;
     margin-left: auto;
     margin-right: auto;
 }
 
 #navigationPanel {
     width: 180px;
-    height: 600px;
+    height: 730px;
     background-color: #031c30;
     float:left;
 }
@@ -48,9 +48,11 @@ body {
 }
 
 #content {
-    width: 1020px;
-    height: 600px;
+    width: 1050px;
+    height: 730px;
     float:left;
+    border-radius: 20px;
+    box-shadow: 5px 5px 8px #888888;
 }
 
 a:link { 
