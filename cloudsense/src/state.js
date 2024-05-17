@@ -21,7 +21,9 @@ export default reactive({
     },
     archiveData: {
         temperatures: [],
-        winds: []
+        winds: [],
+        startDate: "1.01.2010",
+        endDate: "31.01.2010"
     },
     quoteContent: "",
     quoteAuthor: "",

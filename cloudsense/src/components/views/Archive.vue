@@ -12,7 +12,7 @@
 					</p>
 				</div>
 				<div id="archDateRange">
-					<p v-show="state.toggleView"><span>{{ weekStart }}</span> - <span>{{ weekEnd }}</span></p>
+					<p v-show="state.toggleView"><span>{{ archive.startDate }}</span> - <span>{{ archive.endDate }}</span></p>
 				</div>
 			</div>
 
@@ -29,7 +29,7 @@
 
 					<div>
 						<label for="years">Choose a year:</label>
-						<select name="years" id="years">
+						<select name="years" id="years" v-bind:value="selectedYear">
 							<option value=2010>2010</option>
 							<option value=2011>2011</option>
 							<option value=2012>2012</option>
@@ -49,7 +49,7 @@
 
 					<div>
 						<label for="months">Choose a month:</label>
-						<select name="months" id="months">
+						<select name="months" id="months" v-bind:value="selectedMonth">
 							<option value=0>January</option>
 							<option value=1>February</option>
 							<option value=2>March</option>
@@ -81,10 +81,14 @@ import SearchBar from '/src/components/SearchBar.vue'
 import { ref, reactive, onMounted } from 'vue'
 import state from '/src/state.js'
 import axios from 'axios'
+// import { getHistoricTimestamp } from '/src/useMethods.js'
 
 const location = reactive(state.currentLocation)
-const weekStart = ref("")
-const weekEnd = ref("")
+const archive = reactive(state.archiveData)
+const weekStart = ref(state.archiveData.startDate)
+const weekEnd = ref(state.archiveData.endDate)
+const selectedYear = ref(new Date(state.archiveData.startDate).getFullYear())
+const selectedMonth = ref(new Date(state.archiveData.startDate).getMonth())
 
 function toTimestamp(strDate) {
 	var datum = Date.parse(strDate)
@@ -136,10 +140,11 @@ function generateMonthData(dataFromApi) {
 	let d = new Date()
 	d.setFullYear(year, month, 1)
 	let e = new Date()
-	e.setFullYear(year, month, 1)
+	e.setFullYear(year, month, daysnum)
 
-	weekStart.value = d.toLocaleDateString()
-	weekEnd.value =e.toLocaleDateString()
+	state.archiveData.startDate = d.toLocaleDateString()
+	state.archiveData.endDate = e.toLocaleDateString()
+
 	let monthlyTemperatures = []
 	let monthlyWind = []
 	monthlyTemperatures[0] = ["Day", "Temperature"]
@@ -155,23 +160,30 @@ function generateMonthData(dataFromApi) {
 	state.archiveData.temperatures = monthlyTemperatures
 	state.archiveData.winds = monthlyWind
 
-	drawChart(monthlyTemperatures, "archGraph1")
-	drawChart(monthlyWind, "archGraph2")
+	drawChart(monthlyTemperatures, "archGraph1", "Temperature")
+	drawChart(monthlyWind, "archGraph2", "Wind speed")
 }
 
 onMounted(() => {
-	getHistoricTimestamp()
+	if(state.archiveData.temperatures.length == 0) {
+		getHistoricTimestamp()
+	} else {
+		drawChart(state.archiveData.temperatures, "archGraph1", "Temperature")
+		drawChart(state.archiveData.winds, "archGraph2", "Wind speed")
+	}
+
 })
 google.charts.load('current', { 'packages': ['corechart'] });
 
-function drawChart(montlyData, graphId) {
+function drawChart(montlyData, graphId, title) {
 	var data = google.visualization.arrayToDataTable(montlyData);
 	var options = {
+		title: title,
 		fontSize: 20,
 		backgroundColor: '#eeeeee',
 		hAxis: { textStyle: { color: '#e4750e' } },
 		vAxis: { textStyle: { color: '#e4750e' } },
-		series: [{ color: '#e4750e', pointSize: 7, visibleInLegend: false }],
+		series: [{ color: '#e4750e', pointSize: 5, visibleInLegend: false }],
 		tooltip: { trigger: 'selection', textStyle: { color: '#303345;', bold: false } }
 	};
 	var chart = new google.visualization.LineChart(document.getElementById(graphId));
