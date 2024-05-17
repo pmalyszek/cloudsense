@@ -23,7 +23,9 @@ export default reactive({
         temperatures: [],
         winds: [],
         startDate: "1.01.2010",
-        endDate: "31.01.2010"
+        endDate: "31.01.2010",
+        selectedYear: 2011,
+        selectedMonth: 0
     },
     quoteContent: "",
     quoteAuthor: "",

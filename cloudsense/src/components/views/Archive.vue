@@ -29,7 +29,7 @@
 
 					<div>
 						<label for="years">Choose a year:</label>
-						<select name="years" id="years" v-bind:value="selectedYear">
+						<select name="years" id="years" v-bind:value="archive.selectedYear">
 							<option value=2010>2010</option>
 							<option value=2011>2011</option>
 							<option value=2012>2012</option>
@@ -49,7 +49,7 @@
 
 					<div>
 						<label for="months">Choose a month:</label>
-						<select name="months" id="months" v-bind:value="selectedMonth">
+						<select name="months" id="months" v-bind:value="archive.selectedMonth">
 							<option value=0>January</option>
 							<option value=1>February</option>
 							<option value=2>March</option>
@@ -84,8 +84,8 @@ import axios from 'axios'
 
 const location = reactive(state.currentLocation)
 const archive = reactive(state.archiveData)
-const selectedYear = ref(new Date(state.archiveData.startDate).getFullYear())
-const selectedMonth = ref(new Date(state.archiveData.startDate).getMonth())
+// const selectedYear = ref(new Date(state.archiveData.startDate).getFullYear())
+// const selectedMonth = ref(new Date(state.archiveData.startDate).getMonth())
 
 function toTimestamp(strDate) {
 	var datum = Date.parse(strDate)
@@ -139,9 +139,12 @@ function generateMonthData(dataFromApi) {
 	let e = new Date()
 	e.setFullYear(year, month, daysnum)
 
+	state.archiveData.selectedYear = year
+	state.archiveData.selectedMonth = month
 	state.archiveData.startDate = d.toLocaleDateString()
 	state.archiveData.endDate = e.toLocaleDateString()
 
+	console.log(state.archiveData.startDate)
 	let monthlyTemperatures = []
 	let monthlyWind = []
 	monthlyTemperatures[0] = ["Day", "Temperature"]
@@ -198,7 +201,7 @@ function drawWindChart(montlyData, graphId, title) {
 		series: [{ color: '#e4750e', pointSize: 5, visibleInLegend: false }],
 		tooltip: { trigger: 'selection', textStyle: { color: '#303345;', bold: false } }
 	};
-	var chart = new google.visualization.LineChart(document.getElementById(graphId));
+	var chart = new google.visualization.ColumnChart(document.getElementById(graphId));
 	chart.draw(data, options);
 }
 
