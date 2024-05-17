@@ -8,7 +8,7 @@
         </div>
         <div id="weather" v-show="state.toggleView">
             <div id="dashboardLocation">
-                {{ location.name }}
+                <p v-show="state.toggleView"><span>{{ location.name }}</span>,<span>{{ location.country }}</span></p>
             </div>
             <div id="date">
                 {{ currentWeather.date }}

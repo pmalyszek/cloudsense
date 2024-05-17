@@ -1,5 +1,5 @@
 #archiveMessage {
-    width: 1010px;
+    width: 990px;
     height: 50px;
     margin-left: 10px;
     font-size: 40px;
@@ -8,7 +8,6 @@
 #archContent {
     width: 990px;
     height: 730px;
-    margin-left: 10px;
     border-radius: 20px;
     box-shadow: 5px 5px 8px #888888;
 }

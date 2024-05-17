@@ -26,6 +26,9 @@
     margin-left: 20px;
     font-size: 40px;
 }
+#dashboardLocation p {
+    margin: 0px;
+}
 
 #date {
     width: 490px;
