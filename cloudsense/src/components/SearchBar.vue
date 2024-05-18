@@ -29,7 +29,7 @@ function getWeather() {
         params: {
             lat: state.currentLocation.lat,
             lon: state.currentLocation.lon,
-            units: 'metric',
+            units: state.units,
             exclude: 'minutely',
             appid: 'e02eca1e933fe1a76c25135ca7d804c0'
         }
@@ -149,6 +149,10 @@ function getLocationByCoordinates(position) {
 
 onBeforeMount(() => {
     getBrowserLocation()
+    console.log(state.updateMetric)
+    if(state.updateMetric) {
+        getWeather()
+    }
 
 })
 

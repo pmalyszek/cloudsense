@@ -18,7 +18,7 @@
             </div>
             <div style="float: left">
                 <div id="currentTemperature">
-                    <p><span>{{ currentWeather.temperature }}</span> &deg;C</p>
+                    <p><span>{{ currentWeather.temperature }}</span> &deg;<span v-if="isMetric">C</span><span v-else>F</span></p>
                 </div>
                 <div id="weatherName">
                     {{ currentWeather.description }}
@@ -61,6 +61,11 @@ const currentWeather = reactive(state.currentWeather)
 
 const helloMessage = ref(getHelloMessage())
 
+const isMetric = ref(isMetricSystem())
+
+function isMetricSystem() {
+    return state.units == "metric" 
+}
 
 function getHelloMessage() {
     let now = new Date()

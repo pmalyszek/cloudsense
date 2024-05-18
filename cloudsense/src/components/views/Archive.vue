@@ -84,8 +84,6 @@ import axios from 'axios'
 
 const location = reactive(state.currentLocation)
 const archive = reactive(state.archiveData)
-// const selectedYear = ref(new Date(state.archiveData.startDate).getFullYear())
-// const selectedMonth = ref(new Date(state.archiveData.startDate).getMonth())
 
 function toTimestamp(strDate) {
 	var datum = Date.parse(strDate)
@@ -100,6 +98,12 @@ function getRndInteger(min, max) {
 	return Math.abs(Math.floor(Math.random() * (max - min)) + min)
 }
 
+function isMetricSystem() {
+		if(state.units == "metric" )
+			return "Celsius"
+		else return "Fahrenheit"
+}
+
 function getHistoricTimestamp() {
 
 	let selectedDate = new Date();
@@ -109,7 +113,7 @@ function getHistoricTimestamp() {
 			lat: state.currentLocation.lat,
 			lon: state.currentLocation.lon,
 			dt: toTimestamp(selectedDate),
-			units: "metric",
+			units: state.units,
 			appid: 'e02eca1e933fe1a76c25135ca7d804c0'
 		}
 	})
@@ -160,7 +164,7 @@ function generateMonthData(dataFromApi) {
 	state.archiveData.temperatures = monthlyTemperatures
 	state.archiveData.winds = monthlyWind
 
-	drawTempChart(monthlyTemperatures, "archGraph1", "Temperature")
+	drawTempChart(monthlyTemperatures, "archGraph1")
 	drawWindChart(monthlyWind, "archGraph2", "Wind speed")
 }
 
@@ -168,14 +172,16 @@ onMounted(() => {
 	if(state.archiveData.temperatures.length == 0) {
 		getHistoricTimestamp()
 	} else {
-		drawTempChart(state.archiveData.temperatures, "archGraph1", "Temperature")
+		drawTempChart(state.archiveData.temperatures, "archGraph1")
 		drawWindChart(state.archiveData.winds, "archGraph2", "Wind speed")
 	}
 
 })
 google.charts.load('current', { 'packages': ['corechart'] });
 
-function drawTempChart(montlyData, graphId, title) {
+function drawTempChart(montlyData, graphId) {
+
+	let title = "Temperature in " + isMetricSystem()
 	var data = google.visualization.arrayToDataTable(montlyData);
 	var options = {
 		title: title,

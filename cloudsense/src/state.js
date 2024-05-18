@@ -30,5 +30,7 @@ export default reactive({
     quoteContent: "",
     quoteAuthor: "",
     toggleView: false,
-    updateQuote: true
+    updateQuote: true,
+    units: "metric",
+    updateMetric: false
 })
