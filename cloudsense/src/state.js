@@ -21,10 +21,16 @@ export default reactive({
     },
     archiveData: {
         temperatures: [],
-        winds: []
+        winds: [],
+        startDate: "1.01.2010",
+        endDate: "31.01.2010",
+        selectedYear: 2011,
+        selectedMonth: 0
     },
     quoteContent: "",
     quoteAuthor: "",
     toggleView: false,
-    updateQuote: true
+    updateQuote: true,
+    units: "metric",
+    updateMetric: false
 })

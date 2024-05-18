@@ -5,41 +5,51 @@
         </div>
         <div class="setting">
             <div class="settingName">
-                Temperature
+                Units settings
             </div>
-            <!--TODO: Link to app endpoint, which change the setting.-->
-            <!--TODO: When setting is selected div class shall be set to 'selectedSettingValue', else to 'settingValue'-->
-            <a href="https://www.google.com/">
-                <div class="selectedSettingValue">
-                    Celsius
-                </div>
-            </a>
-            <!--TODO: Link to app endpoint, which change the setting-->
-            <!--TODO: When setting is selected div class shall be set to 'selectedSettingValue', else to 'settingValue'-->
-            <a href="https://www.google.com/">
-                <div class="settingValue">
-                    Fahrenheit
-                </div>
-            </a>
-        </div>
-        <div class="setting">
-            <div class="settingName">
-                Wind speed
+
+            <div data-value="metric" class="settingValue" v-bind:class="metricSelected" v-on:click="setUnits">
+                Metric
             </div>
-            <!--TODO: Link to app endpoint, which change the setting-->
-            <!--TODO: When setting is selected div class shall be set to 'selectedSettingValue', else to 'settingValue'-->
-            <a href="https://www.google.com/">
-                <div class="selectedSettingValue">
-                    Wind speed
-                </div>
-            </a>
-            <!--TODO: Link to app endpoint, which change the setting-->
-            <!--TODO: When setting is selected div class shall be set to 'selectedSettingValue', else to 'settingValue'-->
-            <a href="https://www.google.com/">
-                <div class="settingValue">
-                    Wind speed
-                </div>
-            </a>
+
+            <div data-value="imperial" class="settingValue" v-bind:class="imperialSelected" v-on:click="setUnits">
+                Imperial
+            </div>
+
         </div>
     </div>
 </template>
+
+<script setup>
+
+import state from '/src/state.js'
+import { ref } from 'vue'
+
+const metricSelected = ref('')
+const imperialSelected = ref('')
+
+markUnits()
+
+function setUnits(event) {
+
+    var unit = event.target.getAttribute('data-value')
+    if(unit !== state.units) {
+        state.units = unit
+        state.updateMetric = true
+        markUnits()
+
+    }
+
+
+}
+
+function markUnits() {
+    if (state.units == "metric") {
+        metricSelected.value = "selectedSettingValue"
+        imperialSelected.value = ""
+    } else if (state.units == "imperial") {
+        imperialSelected.value = "selectedSettingValue"
+        metricSelected.value = ""
+    }
+}
+</script>

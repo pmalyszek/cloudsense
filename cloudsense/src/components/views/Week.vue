@@ -19,7 +19,7 @@
                         {{ wd.day }}
                     </div>
                     <div class="temperature">
-                        <p><span>{{ wd.temp }}</span>&deg;C</p>
+                        <p><span>{{ wd.temp }}</span>&deg;<span v-if="isMetric">C</span><span v-else>F</span></p>
                     </div>
                     <div class="weatherIcon">
                         <img :src="wd.icon" width="90px" height="90px" />
@@ -46,6 +46,12 @@ const weekStart = ref(new Date().toLocaleDateString())
 let today = new Date()
 today.setDate(today.getDate()+6)
 const weekEnd = ref(today.toLocaleDateString())
+
+const isMetric = ref(isMetricSystem())
+
+function isMetricSystem() {
+    return state.units == "metric" 
+}
 
 google.charts.load('current', { 'packages': ['corechart'] });
 google.charts.setOnLoadCallback(drawChart);

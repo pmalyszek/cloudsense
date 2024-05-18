@@ -8,7 +8,7 @@
         </div>
         <div id="weather" v-show="state.toggleView">
             <div id="dashboardLocation">
-                {{ location.name }}
+                <p v-show="state.toggleView"><span>{{ location.name }}</span>,<span>{{ location.country }}</span></p>
             </div>
             <div id="date">
                 {{ currentWeather.date }}
@@ -18,7 +18,7 @@
             </div>
             <div style="float: left">
                 <div id="currentTemperature">
-                    <p><span>{{ currentWeather.temperature }}</span> &deg;C</p>
+                    <p><span>{{ currentWeather.temperature }}</span> &deg;<span v-if="isMetric">C</span><span v-else>F</span></p>
                 </div>
                 <div id="weatherName">
                     {{ currentWeather.description }}
@@ -37,10 +37,10 @@
                         {{ h.time }}
                     </div>
                     <div>
-                        <img :src="h.icon" width="90px" height="90px" />
+                        <img :src="h.icon" width="80px" height="90px" style="margin-left: 5px;"/>
                     </div>
                     <div class="predictedTemperature">
-                        <p><span>{{ h.temp }}</span>&deg;C</p>
+                        <p><span>{{ h.temp }}</span>&deg;<span v-if="isMetric">C</span><span v-else>F</span></p>
                     </div>
                 </div>
             </template>
@@ -61,6 +61,11 @@ const currentWeather = reactive(state.currentWeather)
 
 const helloMessage = ref(getHelloMessage())
 
+const isMetric = ref(isMetricSystem())
+
+function isMetricSystem() {
+    return state.units == "metric" 
+}
 
 function getHelloMessage() {
     let now = new Date()

@@ -18,8 +18,9 @@ import { onBeforeMount } from 'vue'
 
 const route = useRoute()
 
-const iconAddressStart = 'https://openweathermap.org/img/wn/'
-const iconAddressEnd = '@2x.png'
+const iconAddressStart = '/src/components/icons/'
+
+const iconAddressEnd = '.svg'
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 function getWeather() {
@@ -28,7 +29,7 @@ function getWeather() {
         params: {
             lat: state.currentLocation.lat,
             lon: state.currentLocation.lon,
-            units: 'metric',
+            units: state.units,
             exclude: 'minutely',
             appid: 'e02eca1e933fe1a76c25135ca7d804c0'
         }
@@ -65,7 +66,7 @@ function setCurrentWeather(currentW) {
     state.currentWeather.temperature = Math.round(currentW.temp)
     let tempDesc = currentW.weather[0].description
     state.currentWeather.description = tempDesc.charAt(0).toUpperCase() + tempDesc.slice(1)
-    state.currentWeather.icon = iconAddressStart + currentW.weather[0].icon + iconAddressEnd
+    state.currentWeather.icon = iconAddressStart + currentW.weather[0].icon.slice(0,2) + iconAddressEnd
 }
 
 function setHourlyWeather(hourlyW) {
@@ -75,7 +76,7 @@ function setHourlyWeather(hourlyW) {
         let temp = Math.round(hourW.temp)
         let description = hourW.weather[0].description
         description = description.charAt(0).toUpperCase() + description.slice(1)
-        let icon = iconAddressStart + hourW.weather[0].icon + iconAddressEnd
+        let icon = iconAddressStart + hourW.weather[0].icon.slice(0,2) + iconAddressEnd
         let hourWeather = { time: hour, temp: temp, description: description, icon: icon }
         newHourlyWeather.push(hourWeather)
     })
@@ -90,7 +91,7 @@ function setDailyWeather(dailyWeather) {
         let temp = Math.round(dailyW.temp.day)
         let description = dailyW.weather[0].description
         description = description.charAt(0).toUpperCase() + description.slice(1)
-        let icon = iconAddressStart + dailyW.weather[0].icon + iconAddressEnd
+        let icon = iconAddressStart + dailyW.weather[0].icon.slice(0,2) + iconAddressEnd
         let dayWeather = { day: day, temp: temp, description: description, icon: icon }
         newDailyWeather.push(dayWeather)
     })
@@ -148,6 +149,10 @@ function getLocationByCoordinates(position) {
 
 onBeforeMount(() => {
     getBrowserLocation()
+    console.log(state.updateMetric)
+    if(state.updateMetric) {
+        getWeather()
+    }
 
 })
 

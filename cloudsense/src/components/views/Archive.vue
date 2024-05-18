@@ -12,7 +12,7 @@
 					</p>
 				</div>
 				<div id="archDateRange">
-					<p v-show="state.toggleView"><span>{{ weekStart }}</span> - <span>{{ weekEnd }}</span></p>
+					<p v-show="state.toggleView"><span>{{ archive.startDate }}</span> - <span>{{ archive.endDate }}</span></p>
 				</div>
 			</div>
 
@@ -29,7 +29,7 @@
 
 					<div>
 						<label for="years">Choose a year:</label>
-						<select name="years" id="years">
+						<select name="years" id="years" v-bind:value="archive.selectedYear">
 							<option value=2010>2010</option>
 							<option value=2011>2011</option>
 							<option value=2012>2012</option>
@@ -49,19 +49,19 @@
 
 					<div>
 						<label for="months">Choose a month:</label>
-						<select name="months" id="months">
-							<option value=1>January</option>
-							<option value=2>February</option>
-							<option value=3>March</option>
-							<option value=4>April</option>
-							<option value=5>May</option>
-							<option value=6>June</option>
-							<option value=7>July</option>
-							<option value=8>August</option>
-							<option value=9>September</option>
-							<option value=10>October</option>
-							<option value=11>November</option>
-							<option value=12>December</option>
+						<select name="months" id="months" v-bind:value="archive.selectedMonth">
+							<option value=0>January</option>
+							<option value=1>February</option>
+							<option value=2>March</option>
+							<option value=3>April</option>
+							<option value=4>May</option>
+							<option value=5>June</option>
+							<option value=6>July</option>
+							<option value=7>August</option>
+							<option value=8>September</option>
+							<option value=9>October</option>
+							<option value=10>November</option>
+							<option value=11>December</option>
 						</select>
 					</div>
 					<a @click="getHistoricTimestamp">
@@ -78,29 +78,30 @@
 </template>
 <script setup>
 import SearchBar from '/src/components/SearchBar.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import state from '/src/state.js'
 import axios from 'axios'
 
 const location = reactive(state.currentLocation)
-
-
-const weekStart = ref(new Date().toLocaleDateString())
-let today = new Date()
-today.setDate(today.getDate() + 6)
-const weekEnd = ref(today.toLocaleDateString())
+const archive = reactive(state.archiveData)
 
 function toTimestamp(strDate) {
-	var datum = Date.parse(strDate);
-	return datum / 1000;
+	var datum = Date.parse(strDate)
+	return datum / 1000
 }
 
 function daysInMonth(month, year) {
-	return new Date(year, month, 0).getDate();
+	return new Date(year, Number(month)+1, 0).getDate()
 }
 
 function getRndInteger(min, max) {
-	return Math.abs(Math.floor(Math.random() * (max - min)) + min);
+	return Math.abs(Math.floor(Math.random() * (max - min)) + min)
+}
+
+function isMetricSystem() {
+		if(state.units == "metric" )
+			return "Celsius"
+		else return "Fahrenheit"
 }
 
 function getHistoricTimestamp() {
@@ -112,7 +113,7 @@ function getHistoricTimestamp() {
 			lat: state.currentLocation.lat,
 			lon: state.currentLocation.lon,
 			dt: toTimestamp(selectedDate),
-			units: "metric",
+			units: state.units,
 			appid: 'e02eca1e933fe1a76c25135ca7d804c0'
 		}
 	})
@@ -140,43 +141,73 @@ function generateMonthData(dataFromApi) {
 	let d = new Date()
 	d.setFullYear(year, month, 1)
 	let e = new Date()
-	e.setFullYear(year, month, 1)
+	e.setFullYear(year, month, daysnum)
 
-	weekStart.value = d.toLocaleDateString()
-	weekEnd.value =e.toLocaleDateString()
+	state.archiveData.selectedYear = year
+	state.archiveData.selectedMonth = month
+	state.archiveData.startDate = d.toLocaleDateString()
+	state.archiveData.endDate = e.toLocaleDateString()
+
+	console.log(state.archiveData.startDate)
 	let monthlyTemperatures = []
 	let monthlyWind = []
 	monthlyTemperatures[0] = ["Day", "Temperature"]
 	for (let i = 1; i <= daysnum; i++) {
-		monthlyTemperatures.push([i + 1, getRndInteger(temperature - 3, temperature + 3)])
+		monthlyTemperatures.push([i, getRndInteger(temperature - 3, temperature + 3)])
 	}
 
 	monthlyWind[0] = ["Day", "Wind speed"]
 	for (let i = 1; i <= daysnum; i++) {
-		monthlyWind.push([i + 1, getRndInteger(wind - 7, wind + 5)])
+		monthlyWind.push([i, getRndInteger(wind - 7, wind + 5)])
 	}
 
 	state.archiveData.temperatures = monthlyTemperatures
 	state.archiveData.winds = monthlyWind
 
-	drawChart(monthlyTemperatures, "archGraph1")
-	drawChart(monthlyWind, "archGraph2")
+	drawTempChart(monthlyTemperatures, "archGraph1")
+	drawWindChart(monthlyWind, "archGraph2", "Wind speed")
 }
 
+onMounted(() => {
+	if(state.archiveData.temperatures.length == 0) {
+		getHistoricTimestamp()
+	} else {
+		drawTempChart(state.archiveData.temperatures, "archGraph1")
+		drawWindChart(state.archiveData.winds, "archGraph2", "Wind speed")
+	}
 
+})
 google.charts.load('current', { 'packages': ['corechart'] });
 
-function drawChart(montlyData, graphId) {
+function drawTempChart(montlyData, graphId) {
+
+	let title = "Temperature in " + isMetricSystem()
 	var data = google.visualization.arrayToDataTable(montlyData);
 	var options = {
+		title: title,
 		fontSize: 20,
 		backgroundColor: '#eeeeee',
 		hAxis: { textStyle: { color: '#e4750e' } },
 		vAxis: { textStyle: { color: '#e4750e' } },
-		series: [{ color: '#e4750e', pointSize: 7, visibleInLegend: false }],
+		series: [{ color: '#e4750e', pointSize: 5, visibleInLegend: false }],
 		tooltip: { trigger: 'selection', textStyle: { color: '#303345;', bold: false } }
 	};
 	var chart = new google.visualization.LineChart(document.getElementById(graphId));
+	chart.draw(data, options);
+}
+
+function drawWindChart(montlyData, graphId, title) {
+	var data = google.visualization.arrayToDataTable(montlyData);
+	var options = {
+		title: title,
+		fontSize: 20,
+		backgroundColor: '#eeeeee',
+		hAxis: { textStyle: { color: '#e4750e' } },
+		vAxis: { textStyle: { color: '#e4750e' } },
+		series: [{ color: '#e4750e', pointSize: 5, visibleInLegend: false }],
+		tooltip: { trigger: 'selection', textStyle: { color: '#303345;', bold: false } }
+	};
+	var chart = new google.visualization.ColumnChart(document.getElementById(graphId));
 	chart.draw(data, options);
 }
 

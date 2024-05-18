@@ -26,6 +26,9 @@
     margin-left: 20px;
     font-size: 40px;
 }
+#dashboardLocation p {
+    margin: 0px;
+}
 
 #date {
     width: 490px;
@@ -71,7 +74,7 @@
     background-color: #e68c42;
     box-shadow: 5px 5px 8px #888888;
     color: #EEEEEE;
-    font-size: 32px;
+    font-size: 20px;
     font-weight: 300;
     text-align: center;
     align-content: center;
@@ -83,6 +86,7 @@
     width: 92px;
     height: 178px;
     margin-left: 10px;
+    margin-top: 40px;
     border-radius: 20px;
     box-shadow: 5px 5px 8px #888888;
     float:left;

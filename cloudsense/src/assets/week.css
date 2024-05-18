@@ -3,8 +3,6 @@
     height: 530px;
     margin-left: 10px;
     margin-top: 10px;
-    border-radius: 20px;
-    box-shadow: 5px 5px 8px #888888;
 }
 
 #location {
@@ -67,6 +65,7 @@
 
 .weatherName {
     width: 128px;
+    margin-top: 10px;
     height: 20px;
     color: #303345;
     font-size: 17px;
